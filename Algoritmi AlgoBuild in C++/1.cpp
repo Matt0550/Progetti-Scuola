@@ -20,8 +20,8 @@ int main()
     cout<<"Inserisci il secondo numero ";
     cin>>b;
     
-    cout<<"La somma è uguale a ";
-    int somma = a + b;
+    cout<<"La moltiplicazione è uguale a ";
+    int somma = a*b;
     cout<<somma;
 
     return 0;
