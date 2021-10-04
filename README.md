@@ -1,10 +1,10 @@
 # Progetti Scolastici
 ## Tabella dei contenuti
 
-| Cartella             | Data                                                                |
+| Cartella             | Data             |
 | ---------------------| ---------------- |
 | Algoritmi AlgoBuild in C++ | 01/10/2021 |
-| Esercizi Classroom in C++ | 04/10/2021 |
+| Esercizi Classroom in C++ | 04/10/2021  |
 
 
 ## Authors
