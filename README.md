@@ -7,6 +7,7 @@
 | Esercizi Classroom in C++     | 04/10/2021       | 0                 |
 | Esercizi Classroom 2 in C++   | 08/10/2021       | 0                 |
 | Esercizo ATM in C++           | 11/10/2021       | 0                 |
+| Esercizi Classroom in C++     | 15/10/2021       | 0                 |
 
 
 
