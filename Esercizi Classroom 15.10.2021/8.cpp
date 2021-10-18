@@ -8,18 +8,18 @@ GitHub: @Matt0550
 
 using namespace std;
 
-string calcolo_parita(int a, int n) { 
-    if(a == 0 and n == 0) {
-        return "impossibile.";
+string calcolo_parita(int base, int esponente) { 
+    if(base == 0 and esponente == 0) {
+        return "impossibile";
         
-    } else if(a == 0) {
-        return "pari (il risultato è 0).";
+    } else if(base == 0) {
+        return "pari (il risultato è 0)";
         
-    } else if(n == 0) {
+    } else if(esponente == 0) {
         return "dispari";
         
-    } else if(a%2 == 0) {
-        return "pari.";
+    } else if(base%2 == 0) {
+        return "pari";
         
     } else {
         return "dispari";
@@ -28,15 +28,15 @@ string calcolo_parita(int a, int n) {
 
 int main()
 {
-    int a,n;
+    int base,esponente;
 
     cout << "Inserire la base: ";
-    cin >> a;
+    cin >> base;
     
     cout << "Inserire l'esponente: ";
-    cin >> n;
+    cin >> esponente;
     
     
-    cout << "La potenza è " << calcolo_parita(a, n);
+    cout << "La potenza è " << calcolo_parita(base, esponente);
     return 0;
 }
