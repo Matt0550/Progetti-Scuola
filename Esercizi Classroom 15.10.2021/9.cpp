@@ -10,13 +10,13 @@ using namespace std;
 
 string calcolo_frazione(int n, int d) { 
     if(n < d) {
-        return "propria";
+        return "propria"; // Numerarore minore del denominatore
         
     } else if(n%d == 0) {
-        return "apparente";
+        return "apparente"; // Numeratore é uguale o un multiplo del denominatore
         
     } else {
-        return "impropria";
+        return "impropria"; // Numeratore maggiode del denominatore
     }
 }
 
