@@ -15,7 +15,7 @@ int main()
     cin>>N;
     
     int tot = N;
-    for (int i = 1; i < N && i > 0; i++) {
+    for (int i = 1; i < N; i++) {
         tot = tot * (N-i);
     }
     
