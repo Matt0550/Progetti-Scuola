@@ -25,7 +25,7 @@ int main()
 
     for(int i=0; i <= mesiLen; i++) {
         if (mese == i) {
-            if (giorno < 31 and giorno > 0) {
+            if (giorno <= 31 and giorno > 0) {
                 cout<<"Giorno: "<<giorno<<endl;
                 cout<<"Mese: "<<mesi[i-1]<<endl<<endl;
                 
