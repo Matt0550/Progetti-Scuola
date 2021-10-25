@@ -31,7 +31,7 @@ int main()
                 
                 switch (mese) {
                     case 1: // Gennaio
-                        if(giorno < 22) {
+                        if(giorno <= 21) {
                             segno = "CAPRICORNO"; // 22 dicembre – 20 gennaio
                         } else {
                             segno = "ACQUARIO"; // 21 gennaio – 19 febbraio
@@ -39,7 +39,7 @@ int main()
                         break;
                         
                     case 2: // Febbraio
-                        if (giorno < 20) {
+                        if (giorno <= 19) {
                             segno = "ACQUARIO"; // 21 gennaio – 19 febbraio
                         } else {
                             segno = "PESCI"; // 20 febbraio – 20 marzo
@@ -47,7 +47,7 @@ int main()
                         break;
                         
                     case 3: // Marzo 
-                        if (giorno < 21) {
+                        if (giorno <= 20) {
                             segno = "PESCI"; // 20 febbraio – 20 marzo
                         } else {
                             segno = "ARIETE"; // 21 marzo – 20 aprile
@@ -55,7 +55,7 @@ int main()
                         break;
                         
                     case 4: // Aprile 
-                        if (giorno < 21) {
+                        if (giorno <= 20) {
                             segno = "ARIETE"; // 21 marzo – 20 aprile
                         } else {
                             segno = "TORO"; // 21 aprile – 21 maggio
@@ -63,7 +63,7 @@ int main()
                         break;
                         
                     case 5: // Maggio 
-                        if (giorno < 22) {
+                        if (giorno <= 21) {
                             segno = "TORO"; // 21 aprile – 21 maggio
                         } else {
                             segno = "GEMELLI"; // 22 maggio – 21 giugno
@@ -71,7 +71,7 @@ int main()
                         break;
                         
                     case 6: // Giugno 
-                        if (giorno < 22) {
+                        if (giorno <= 21) {
                             segno = "GEMELLI"; // 22 maggio – 21 giugno
                         } else {
                             segno = "CANCRO"; // 22 giugno – 23 luglio
@@ -79,7 +79,7 @@ int main()
                         break;
                         
                     case 7: // Luglio 
-                        if (giorno < 23) {
+                        if (giorno <= 22) {
                             segno = "CANCRO"; // 22 giugno – 23 luglio
                         } else {
                             segno = "LEONE"; // 23 luglio – 23 agosto
@@ -87,7 +87,7 @@ int main()
                         break;
                         
                     case 8: // Agosto 
-                        if (giorno < 23) {
+                        if (giorno <= 22) {
                             segno = "LEONE"; // 23 luglio – 23 agosto
                         } else {
                             segno = "VERGINE"; // 24 agosto – 23 settembre
@@ -95,7 +95,7 @@ int main()
                         break;
                         
                     case 9: // Settembre 
-                        if (giorno < 23) {
+                        if (giorno <= 22) {
                             segno = "VERGINE"; // 24 agosto – 23 settembre
                         } else {
                             segno = "BILANCIA"; // 24 settembre – 23 ottobre
@@ -103,7 +103,7 @@ int main()
                         break;
                         
                     case 10: // Ottobre 
-                        if (giorno < 23) {
+                        if (giorno <= 22) {
                             segno = "BILANCIA"; // 24 settembre – 23 ottobre
                         } else {
                             segno = "SCORPIONE"; // 24 ottobre – 22 novembre
@@ -111,7 +111,7 @@ int main()
                         break;
                         
                     case 11: // Novembre 
-                        if (giorno < 22) {
+                        if (giorno <= 21) {
                             segno = "SCORPIONE"; // 24 ottobre – 22 novembre
                         } else {
                             segno = "SAGITTARIO"; // 23 novembre – 21 dicembre
@@ -119,7 +119,7 @@ int main()
                         break;
                         
                     case 12: // Dicembre 
-                        if (giorno < 22) {
+                        if (giorno <= 21) {
                             segno = "SAGITTARIO"; // 23 novembre – 21 dicembre
                         } else {
                             segno = "CAPRICORNO"; // 22 dicembre – 20 gennaio
