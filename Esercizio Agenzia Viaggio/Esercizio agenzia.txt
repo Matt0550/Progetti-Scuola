@@ -1,0 +1,15 @@
+Un'agenzia di viaggi effettua per prenotazioni per i voli della compagnia Rapisardi AirLines che applica delle tariffe standard per le seguenti destinazioni: 
+1: Catania - Roma 30€; 
+2: Catania - Praga 55€; 
+3: Catania - New York 400€; 
+Al momento della prenotazione il cliente dovrà indicare il numero di passegeri da prenotare e l'eventuale supplemento del bagaglio in stiva che corrisponde a 20€ per le destinazioni europee e di 50€ per i voli intercontinentali per ogni passegero.
+Nel mese di Novembre l'agenzia applica uno sconto del 10% se il costo della prenotazione è superiore a 500€.
+Sul costo della prenotazione bisognerà calcolare le imposte di imbarco del 10% per destinazioni europee e e 17% per destinazioni intercontinentali.
+Visualizzare:
+- Il totale lordo della prenotazione (senza imposte)
+- Le imposte di imbarco
+- Lo sconto
+- Il totale netto da pagare
+- Il messaggio "sconto d'autunno" se è stato applicato lo sconto
+Alla fine il programma dovrà prevedere il controllo dell'input in maniera tale che non possao essere inseriti codici di destinazione diversi da quelli prestabiliti.
+Se il cliente ha bagagli in stiva visualizzare il messaggio "Recarsi per il check-in allo sportello 8"
