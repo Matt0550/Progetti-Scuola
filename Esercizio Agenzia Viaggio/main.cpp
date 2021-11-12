@@ -19,6 +19,7 @@ Se il cliente ha bagagli in stiva visualizzare il messaggio "Recarsi per il chec
 */
 
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -33,6 +34,12 @@ string Destinations[] = {"Roma Fiumicino", "Praga", "New York John Fitzgerald Ke
 string DestinationsCode[] = {"FCO", "PRG", "JFK"};
 
 int DestinationsPrice[] = {30, 55, 400};
+string DestinationsZone[] = {"europee", "europee", "intercontinentali"};
+
+int DestinationsPriceEurope = 10;
+int DestinationsPriceIntercontinental = 17;
+int BagPriceEurope = 20;
+int BagPriceIntercontinental = 55;
 
 
 void ClearScreen() {
@@ -67,11 +74,60 @@ string CustomSeparatorWithText(string symbol, string text, int length = 10) {
     return text3;
 }
 
+string GetDate() {
+    time_t ttime = time(0); // Initialize time
+    tm *local_time = localtime(&ttime); // Get local time
+    
+    string day, month, year;
+    
+    day = local_time->tm_mday + "/"; // Get day
+    month = 1 + local_time->tm_mon+"/"; // Get month
+    year = 1900 + local_time->tm_year; // Get year. 1900 default year
+    
+    return day+month+year;
+
+}
+
 class Flight {
     public:
+    int CalculatePrice(int passengers, int checkinBag, string departure, string destination) {
+        int AirportDeparturesLen = sizeof(AirportDepartures)/sizeof(AirportDepartures[0]);
+
+        for (int i = 0; i<AirportDeparturesLen; i++) {
+            cout<<departure<<AirportDepartures[i];
+            if (departure == AirportDepartures[i] && DestinationsZone[i] == "europee") {
+                int sale;
+                sale = DestinationsPrice[i]-DestinationsPrice[i]*(DestinationsPriceEurope/100);
+                
+                return sale;
+                
+            }
+        }
+        return 0;
+ 
+    }
+    
     void ChooseFlight(string departure, string destination) {
+        ClearScreen();
+        int passengers, checkinBag;
+        string departureDate;
         
+        cout<<CustomSeparatorWithText("=", "Prenotazione");
+        cout<<"Data attuale: "<<GetDate()<<endl<<endl;
+        cout<<"Aereoporto di partenza: "<<departure<<endl;
+        cout<<"Aereoporto di arrivo: "<<destination<<endl<<endl;
         
+        cout<<"Numero di passegeri: ";
+        cin>>passengers;
+        
+        cout<<"Numero di bagagli da stiva: ";
+        cin>>checkinBag;
+        
+        cout<<"Data di partenza: ";
+        cin>>departureDate;
+        
+        cout<<CalculatePrice(passengers, checkinBag, departure, destination);
+    
     }
 };
 
@@ -92,41 +148,36 @@ class Welcome {
             cout<<AirportDeparturesCode[i]<<": Aereoporto di "<<AirportDepartures[i]<<endl;
         }
         while (true) {
-            cout<<"\nSeleziona un aereoporto di partenza: ";
+            cout<<"\nSelezionare l'aereoporto di partenza: ";
             cin>>choose;
             for (int i = 0; i<AirportDeparturesLen; i++) {
     
                 if (choose == AirportDeparturesCode[i] or choose == AirportDepartures[i]) {
-                    break;
-                }
-                break;
-            }
-           break;
-        }
-        
-        ClearScreen();
-        cout<<CustomSeparatorWithText("=", "Destinazioni");
-        cout<<"Selezionare adesso l'aereoporto di arrivo: "<<endl<<endl;
-
-        for (int i = 0; i<DestinationsLen; i++) {
-            cout<<DestinationsCode[i]<<": Aereoporto di "<<Destinations[i]<<endl;
-        }
-        
-        while (true) {
-            cout<<"\nSeleziona un aereoporto di arrivo: ";
-            cin>>choose;
-            for (int i = 0; i<DestinationsLen; i++) {
-
-                if (choose == DestinationsCode[i] or choose == Destinations[i]) {
                     ClearScreen();
-                    cout<<CustomSeparatorWithText("=", FlightCompany);
-                    flight.ChooseFlight(AirportDepartures[i], Destinations[i]);
-                    cout<<"Attendere prego: "<<endl<<endl;
+                    cout<<CustomSeparatorWithText("=", "Destinazioni");
+                    cout<<"Selezionare adesso l'aereoporto di arrivo: "<<endl<<endl;
+            
+                    for (int i = 0; i<DestinationsLen; i++) {
+                        cout<<DestinationsCode[i]<<": Aereoporto di "<<Destinations[i]<<endl;
+                    }
+                    
+                    while (true) {
+                        cout<<"\nSeleziona un aereoporto di arrivo: ";
+                        cin>>choose;
+                        for (int i = 0; i<DestinationsLen; i++) {
+                            if (choose == DestinationsCode[i] or choose == Destinations[i]) {
+                                for (int x = 0; x<AirportDeparturesLen; x++) {
+                                    flight.ChooseFlight(AirportDepartures[x], Destinations[i]);
+                                    break;  
+                                }
+      
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    
 };
 
 
@@ -136,3 +187,5 @@ int main()
     welcome.home();
     return 0;
 }
+
+
