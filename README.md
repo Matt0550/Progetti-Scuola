@@ -12,6 +12,9 @@
 | Esercizi Vari                 | 03/11/2021       | 0                 |
 | Esercizi Classroom in C++     | 05/11/2021       | 0                 |
 | Esercizi Classroom in C++     | 10/11/2021       | 2                 |
+| Esercizio Agenzia Viaggi in C++ | 17/11/2021     | 0                 |
+| Esercizio Cassa Supermercato in C++ | 24/11/2021 | 0                 |
+| Esercizi Classroom in C++     | 01/12/2021       | 0                 |
 
 
 ## Authors
