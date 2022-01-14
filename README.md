@@ -15,6 +15,7 @@
 | Esercizio Agenzia Viaggi in C++ | 17/11/2021     | 0                 |
 | Esercizio Cassa Supermercato in C++ | 24/11/2021 | 0                 |
 | Esercizi Classroom in C++     | 01/12/2021       | 0                 |
+| Esercizio Classroom in C++    | 14/01/2022       | 0                 |
 
 
 ## Authors
