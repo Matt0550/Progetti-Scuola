@@ -1,0 +1,9 @@
+Realizzare un programma che ci permetta di calcolare il totale che serve pagare un'impresa per l'affitto
+dei locali. Tenuto conto che:
+1. L'affitto è pari a 15€ al metro quadrato
+2. Se il totale è superiore a 600€ verrà applicato uno sconto del 10%, in caso contrario del 5€
+3. Sul totale scontato calcolare imposta di registro pari al 2%.
+Visualizzare:
+1. L'importo dell'affitto
+2. l'importo scontato
+3. L'imposta di registro
