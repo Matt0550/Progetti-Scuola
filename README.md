@@ -18,6 +18,7 @@
 | Esercizio Classroom in C++    | 14/01/2022       | 0                 |
 | Conto Corrente in C++         | 19/01/2022       | 0                 |
 | Rapisardi Airlines Panel C++  | 23/02/2022       | 0                 |
+| Esercizio Classroom in C++    | 11/03/2022       | 0                 |
 
 
 ## Authors
