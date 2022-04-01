@@ -18,6 +18,7 @@ funzionalità:
 #include <string>
 #include <fstream>
 #include <algorithm> // Sort
+#include <vector>
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -259,16 +260,29 @@ class Program {
         cout<<"Seleziona una categoria"<<endl;
         
         int arr_size = sizeof(codice)/sizeof(codice[0]);
-
-        sort(tipologia,tipologia+arr_size, greater<string>()); //Use the start and end like this
         
-        cout<<"[0] "<<tipologia[0]<<endl;
+        int elenco = 1;
+        
+        string tipologia_ordinata[1000] = {};
+        
+        copy(begin(tipologia), end(tipologia), tipologia_ordinata);
+        
+        sort(tipologia_ordinata, tipologia_ordinata + arr_size, greater<string>());
+        
+        vector<string> categorie_ordinate;
+        
+        // cout<<"[0] "<<tipologia[0]<<endl;
+        // categorie_ordinate.push_back(tipologia[0]);
+        // elenco++;
 
         for(int i = 1; i < arr_size && codice[i-1] !=-1 && codice[i] != -1; i++) {
             if(tipologia[i] != tipologia[i - 1]) {
-                cout<<"["<<i<<"] "<<tipologia[i]<<endl;
+                cout<<"["<<elenco<<"] "<<tipologia[i]<<endl;
+                categorie_ordinate.push_back(tipologia[i]);
+                elenco++;
             }
         }
+        reverse(categorie_ordinate.begin(), categorie_ordinate.end());
         
         int category = 0;
         int product = 0;
