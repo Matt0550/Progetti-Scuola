@@ -20,6 +20,7 @@
 | Rapisardi Airlines Panel C++  | 23/02/2022       | 0                 |
 | Esercizio Classroom in C++    | 11/03/2022       | 0                 |
 | Rapisardi Corporation in C++  | 18/03/2022       | 0                 |
+| Esercizio Classroom in C++    | 30/03/2022       | 0                 |
 
 
 ## Authors
