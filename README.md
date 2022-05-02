@@ -21,7 +21,9 @@
 | Esercizio Classroom in C++    | 11/03/2022       | 0                 | 5               |
 | Rapisardi Corporation in C++  | 18/03/2022       | 0                 | 1               |
 | Esercizio Classroom in C++    | 30/03/2022       | 0                 | 9               |
-| TOTALE                        | 08/04/2022       | 0                 | 109             |
+| Esercizio Fatture             | 20/04/2022       | 0                 | 1               |
+| Esercizio Classroom in C++    | 29/04/2022       | 0                 | 5               |
+| TOTALE                        | 02/05/2022       | 0                 | 115             |
 
 
 ## Authors
