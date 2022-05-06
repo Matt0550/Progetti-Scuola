@@ -7,7 +7,7 @@ GitHub: @Matt0550
 
 using namespace std;
 
-void swap(int *a, int *b) {
+void scambia(int *a, int *b) {
     int tmp;
     tmp = *a;
     *a = *b;
@@ -18,7 +18,7 @@ int main()
 {
     int n1 = 10;
     int n2 = 20;
-    swap(n1, n2);
+    scambia(&n1, &n2);
     cout<<n1<<endl<<n2;
     return 0;
 }

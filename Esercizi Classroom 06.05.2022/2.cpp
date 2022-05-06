@@ -7,7 +7,7 @@ GitHub: @Matt0550
 
 using namespace std;
 
-int max(int *a, int *b) {
+int massimo(int *a, int *b) {
     if(*a > *b) {
         return *a;
     } else {
@@ -19,7 +19,7 @@ int main()
 {
     int n1 = 10;
     int n2 = 20;
-    cout<<max(n1, n2);
+    cout<<massimo(&n1, &n2);
     
     return 0;
 }
