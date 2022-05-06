@@ -113,7 +113,17 @@ class Program {
         }
     }
     
-    double calcoloDetrazioniFamiliari(int nFigli);
+    double calcoloDetrazioniFamiliari(int opzione) {
+        if(opzione == 1) {
+            return 220;
+        } else if(opzione == 2) {
+            return 350;
+        } else if(opzione == 3) {
+            return 620;
+        } else {
+            return -1;
+        }
+    }
     
     void home() { 
         ClearScreen();
@@ -135,24 +145,33 @@ class Program {
         cin>>nFigli;
         cout<<resetColorCode;
         
-    
-        if(nFigli > 0) {
-            for(int i = 0; i<=nFigli; i++) {
-                cout<<endl<<"Inserisci i dati del "<<i+1<<" figlio:";
-                cout<<"1. Figlio di età superiore a 3 anni"<<endl;
-                cout<<"2. Figlio di età inferiore a 3 anni"<<endl;
-                cout<<"3. Figlio con una disabilità";
-                
-            }
-            
-        }
-        
         double stipendioLordo = oreLavorate*pagaOraria;
         double ritenutePrevidenziale = (stipendioLordo * 100)/23.81;
         double imponibileFiscale = stipendioLordo - ritenutePrevidenziale;
         double impostaLorda = calcoloImpostaLorda(imponibileFiscale);
         double detrazioni = calcoloDetrazioni(imponibileFiscale);
         double impostaNetto = impostaLorda - detrazioni;
+        double totaleProvvisiorio = imponibileFiscale;
+        
+        
+        if(nFigli > 0) {
+            for(int i = 0; i<=nFigli; i++) {
+                int sceltaFigli = 0;
+                cout<<endl<<"Inserisci i dati del "<<i+1<<" figlio:";
+                cout<<"1. Figlio di età superiore a 3 anni"<<endl;
+                cout<<"2. Figlio di età inferiore a 3 anni"<<endl;
+                cout<<"3. Figlio con una disabilità";
+                cin>>sceltaFigli;
+                
+                if(sceltaFigli == 1 or sceltaFigli == 2 or sceltaFigli == 3) {
+                    totaleProvvisiorio = totaleProvvisiorio - calcoloDetrazioni(nFigli);
+                    
+                }
+            }
+            
+        }
+        
+    
         
     }
 };
