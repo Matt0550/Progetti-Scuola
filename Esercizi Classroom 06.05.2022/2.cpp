@@ -1,24 +1,25 @@
 /*
 Website: https://matt05.ml
 GitHub: @Matt0550
-3. Implementare la funzione swap passandogli i valori tramite puntatori.
+2. Trovare il massimo tra due numeri tramite puntatori
 */
 #include <iostream>
 
 using namespace std;
 
-void swap(int *a, int *b) {
-    int tmp;
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
+int max(int *a, int *b) {
+    if(*a > *b) {
+        return *a;
+    } else {
+        return *b;
+    }
 }
 
 int main()
 {
     int n1 = 10;
     int n2 = 20;
-    swap(n1, n2);
-    cout<<n1<<endl<<n2;
+    cout<<max(n1, n2);
+    
     return 0;
 }
