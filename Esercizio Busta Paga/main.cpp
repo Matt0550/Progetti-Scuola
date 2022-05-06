@@ -155,24 +155,24 @@ class Program {
         
         
         if(nFigli > 0) {
-            for(int i = 0; i<=nFigli; i++) {
+            for(int i = 0; i<nFigli; i++) {
                 int sceltaFigli = 0;
-                cout<<endl<<"Inserisci i dati del "<<i+1<<" figlio:";
+                cout<<endl<<"Inserisci i dati del "<<i+1<<" figlio:"<<endl;
                 cout<<"1. Figlio di età superiore a 3 anni"<<endl;
                 cout<<"2. Figlio di età inferiore a 3 anni"<<endl;
-                cout<<"3. Figlio con una disabilità";
+                cout<<"3. Figlio con una disabilità"<<endl;
+                cout<<"Scelta: "<<greenColorCode;
                 cin>>sceltaFigli;
+                cout<<resetColorCode;
                 
                 if(sceltaFigli == 1 or sceltaFigli == 2 or sceltaFigli == 3) {
-                    totaleProvvisiorio = totaleProvvisiorio - calcoloDetrazioni(nFigli);
+                    totaleProvvisiorio -= calcoloDetrazioni(nFigli);
                     
+                } else {
+                    cout<<redColorCode<<"Scelta non valida!"<<resetColorCode;
                 }
             }
-            
         }
-        
-    
-        
     }
 };
 
