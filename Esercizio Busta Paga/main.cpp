@@ -90,39 +90,80 @@ string CustomSeparatorWithText(string symbol, string text, int length = 10) {
 class Program {
     public:
     double calcoloImpostaLorda(double imponibileFiscale) {
-        if(imponibileFiscale <= 1154) {
-            return (imponibileFiscale*100)/23;
-        } else if (imponibileFiscale > 1154 && imponibileFiscale <= 2154) {
-            return (imponibileFiscale*100)/25;
-        } else if (imponibileFiscale > 2154) {
-            return (imponibileFiscale*100)/35;
+        double impostaLorda = (imponibileFiscale*23)/100;
+        imponibileFiscale -= 1154;
+        if(imponibileFiscale > 1154 && imponibileFiscale <= 2154) {
+            impostaLorda += (imponibileFiscale*25)/100;
+            imponibileFiscale -= 2154;
+            if(imponibileFiscale > 0) {
+                impostaLorda += (imponibileFiscale*35)/100;
+                return impostaLorda;
+            } else {
+                return impostaLorda;
+            }
         } else {
-            return -1;
+            return impostaLorda;
         }
     }
     
-    double calcoloDetrazioni(double imponibileFiscale) {
-        if(imponibileFiscale <= 1154) {
-            return 144;
-        } else if (imponibileFiscale > 1154 && imponibileFiscale <= 2154) {
-            return 146 + 92*(2154 - imponibileFiscale)/1000;
-        } else if (imponibileFiscale > 2154) {
-            return 0;
+    double calcoloDetrazioniLavoroDipendente(double imponibileFiscale) {
+        double detrazione = 144;
+        imponibileFiscale -= 1154;
+        if(imponibileFiscale > 1154 && imponibileFiscale < 2154) {
+            detrazione += 146 + 92 *(2154 - imponibileFiscale)/1000;
+            return detrazione;
         } else {
-            return -1;
+            return detrazione;
         }
     }
     
-    double calcoloDetrazioniFamiliari(int opzione) {
-        if(opzione == 1) {
-            return 220;
-        } else if(opzione == 2) {
-            return 350;
-        } else if(opzione == 3) {
-            return 620;
-        } else {
-            return -1;
+    double calcoloDetrazioniFamiliari(int nFigli) {
+        double detrazione = 0;
+        int tmp;
+        if(nFigli > 0) {
+            for(int i = 0; i < nFigli; i++) {
+                cout<<"Inserisci i dati del "<<i+1<<" figlio:"<<endl;
+                cout<<"1. Figlio di età superiore a 3 anni"<<endl;
+                cout<<"2. Figlio di età inferiore a 3 anni"<<endl;
+                cout<<"3. Figlio con una disabilità"<<endl;
+                cout<<"4. Nessuna"<<endl;
+                cout<<"Scelta: "<<greenColorCode;
+                cin>>tmp;
+                cout<<resetColorCode;
+                switch(tmp) {
+                    case 1: 
+                        detrazione += 220;
+                        break;
+                    case 2:
+                        detrazione += 350;
+                        break;
+                    case 3:
+                        detrazione += 620;
+                        break;
+                    case 4:
+                        detrazione += 0;
+                    default:
+                        cout<<endl<<redColorCode<<"Scelta non valida!"<<redColorCode<<endl;
+                        detrazione += 0;
+                        break;
+                        
+                }
+            }
         }
+        return detrazione;
+    }
+
+    
+    double calcoloDetrazioniConiugeCarico(double imponibileFiscale) {//Funzione che mi serve per calcolare le detrazioni coniuge a carico
+    	double detrazioni = 0;
+    	detrazioni += 67;
+    	imponibileFiscale -= 1154;
+    	if (imponibileFiscale > 1154 && imponibileFiscale < 3333) {
+    		detrazioni += 58;
+    		return detrazioni;
+    	} else {
+    		return detrazioni;
+    	}
     }
     
     void home() { 
@@ -149,30 +190,14 @@ class Program {
         double ritenutePrevidenziale = (stipendioLordo * 100)/23.81;
         double imponibileFiscale = stipendioLordo - ritenutePrevidenziale;
         double impostaLorda = calcoloImpostaLorda(imponibileFiscale);
-        double detrazioni = calcoloDetrazioni(imponibileFiscale);
+        double DetrazioniFamiliari = calcoloDetrazioniFamiliari(nFigli);
+        double DetrazioniConiugeCarico = calcoloDetrazioniConiugeCarico(imponibileFiscale);
+        double DetrazioniLavoroDipendente = calcoloDetrazioniLavoroDipendente(imponibileFiscale);
+        double detrazioni = DetrazioniFamiliari + DetrazioniConiugeCarico + DetrazioniLavoroDipendente;
         double impostaNetto = impostaLorda - detrazioni;
-        double totaleProvvisiorio = imponibileFiscale;
+        double stipendioNetto = stipendioLordo - ritenutePrevidenziale - impostaNetto;
         
-        
-        if(nFigli > 0) {
-            for(int i = 0; i<nFigli; i++) {
-                int sceltaFigli = 0;
-                cout<<endl<<"Inserisci i dati del "<<i+1<<" figlio:"<<endl;
-                cout<<"1. Figlio di età superiore a 3 anni"<<endl;
-                cout<<"2. Figlio di età inferiore a 3 anni"<<endl;
-                cout<<"3. Figlio con una disabilità"<<endl;
-                cout<<"Scelta: "<<greenColorCode;
-                cin>>sceltaFigli;
-                cout<<resetColorCode;
-                
-                if(sceltaFigli == 1 or sceltaFigli == 2 or sceltaFigli == 3) {
-                    totaleProvvisiorio -= calcoloDetrazioni(nFigli);
-                    
-                } else {
-                    cout<<redColorCode<<"Scelta non valida!"<<resetColorCode;
-                }
-            }
-        }
+        cout << endl << "Il tuo stipendio netto è: " << greenColorCode<<stipendioNetto;
     }
 };
 
