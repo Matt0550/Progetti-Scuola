@@ -9,13 +9,18 @@ Bubble sort 18/05/2022
 using namespace std;
 
 void bubble_sort(int array[], int array_len) {
+    bool order = false;
     for (int i = 0; i < array_len - 1; i++) { // Avvio il primo ciclo
         for (int j = 0; j < array_len - i - 1; j++) { // Avvio il secondo ciclo con condizione che j sia minore della lunghezza dell'array - l'indice del primo for -1
             if (array[j] > array[j + 1]) { // Se il primo numero è maggiore del secondo, scambia i valori
                 swap(array[j], array[j + 1]); // Scambio tra il primo elemento e il secondo
+                order = true;
             }
         }
-    }
+        if(order == false) {
+            break;
+        }
+    }    
 }
 
 int main() {
