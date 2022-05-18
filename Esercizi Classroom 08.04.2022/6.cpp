@@ -7,12 +7,10 @@ GitHub: @Matt0550
 
 using namespace std;
 
-int valoriAssoluti(int &n1, int &n2, int &n3) {
+void valoriAssoluti(int &n1, int &n2, int &n3) {
     if(n1<0) n1*=-1;
     if(n2<0) n2*=-1;
     if(n3<0) n3*=-1;
-    return 1;
-
 }
 
 int main()
