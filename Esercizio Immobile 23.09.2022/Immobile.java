@@ -62,4 +62,35 @@ public class Immobile {
     public void editPrice(int newPrice) {
         costoTotale = newPrice;
     }
+    
+    
+    
+    
+    public String getType() {
+        return tipo;
+    }
+    
+    public String getPosition() {
+        return posizione;
+    }
+    
+    public String getAddress() {
+        return indirizzo;
+    }
+    
+    public int getNumberRooms() {
+        return numeroStanze;
+    }
+    
+    public int getNumberBathrooms() {
+        return numeroBagni;
+    }
+    
+    public int getNumberBeds() {
+        return numeroLetti;
+    }
+    
+    public double getPrice() {
+        return costoTotale;
+    }
 }
