@@ -1,5 +1,7 @@
 import java.util.HashMap;
 
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,13 +12,15 @@ import java.util.HashMap;
  * @author Matteo
  */
 public class Home extends javax.swing.JFrame {
-
     /**
      * Creates new form Home
      */
     static HashMap<String, String> userData = new HashMap<String, String>();
+    static HashMap<String, String> logsData = new HashMap<String, String>();
     public Home(HashMap<String, String> userData) {
         this.userData = userData;
+        Logs logs = new Logs();
+        logsData = logs.getLogsOfUser(userData.get("username"));
         System.out.println(userData);
         initComponents();
     }
@@ -50,6 +54,7 @@ public class Home extends javax.swing.JFrame {
         actionsTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Banca Gaddean");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -143,7 +148,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel5.setText("IBAN: " + userData.get("iban"));
 
-        jLabel6.setText("Saldo disponibile: " + userData.get("saldo"));
+        jLabel6.setText("Saldo disponibile: " + userData.get("saldo") + "€");
 
         jLabel7.setText("Limite (prelievo e deposito): " + userData.get("limite"));
 
@@ -182,12 +187,14 @@ public class Home extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Azioni recenti"));
 
-        actionsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"test", "prova", "prova", "gg", "ggf"}
-            }, new String [] {
-                "Azione", "Valore", "Utente", "IBAN (da)", "IBAN (a)"
-            }));
+        
+        String[] columnNames = {"Azione", "Valore", "Utente", "Iban (da)", "Iban (a)"};
+        String[][] data = new String[0][0];
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        actionsTable.setModel(model);
+        
+
+        actionsTable.setRowHeight(30);
             actionsTable.setEnabled(false);
             jScrollPane1.setViewportView(actionsTable);
 
@@ -243,26 +250,29 @@ public class Home extends javax.swing.JFrame {
             );
 
             pack();
+            setLocationRelativeTo(null);
         }// </editor-fold>//GEN-END:initComponents
 
-    private void sendMoneyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMoneyButtonActionPerformed
+    private void sendMoneyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // Open the "inviaBonifico" as dialog
-        InviaBonifico inviaBonifico = new InviaBonifico(this, true);
-        inviaBonifico.setVisible(true);
-        
+        InviaBonifico inviaBonifico = new InviaBonifico(this, true, userData.get("iban"));
+        inviaBonifico.setVisible(true);   
     }
 
-    private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_depositButtonActionPerformed
+    private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        Deposita deposita = new Deposita(this, true, userData.get("iban"));
+        deposita.setVisible(true);
+    }
 
     private void withdrawsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdrawsButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_withdrawsButtonActionPerformed
+        Preleva preleva = new Preleva(this, true, userData.get("iban"));
+        preleva.setVisible(true);
+    }
 
     private void editOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editOwnerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editOwnerActionPerformed
+        CambioIntestatario cambioIntestatario = new CambioIntestatario(this, true, userData.get("username"));
+        cambioIntestatario.setVisible(true);
+    }
 
     private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
         // TODO add your handling code here:

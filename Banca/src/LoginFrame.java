@@ -46,6 +46,18 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
+        usernameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameTextFieldKeyPressed(evt);
+            }
+        });
+
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
+        });
+
         jLabel1.setText("Password");
 
         jLabel2.setText("Username");
@@ -86,7 +98,23 @@ public class LoginFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void usernameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTextFieldKeyPressed
+        // Only if the user press the enter key focus on the password field
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            passwordField.requestFocus();
+        }
+    }
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        // Only if the user press the enter key click on the login button
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            buttonLogin.doClick();
+        }
+    }
 
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {
         // Check the username and password
@@ -105,9 +133,7 @@ public class LoginFrame extends javax.swing.JFrame {
             // Show an error message
             JOptionPane.showMessageDialog(this, "Username o password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         }
-            
     }
-
 
     /**
      * @param args the command line arguments

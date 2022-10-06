@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
@@ -12,9 +14,10 @@ public class InviaBonifico extends javax.swing.JDialog {
     /**
      * Creates new form InviaBonifico
      */
-    public InviaBonifico(java.awt.Frame parent, boolean modal) {
+    public InviaBonifico(java.awt.Frame parent, boolean modal, String iban) {
         super(parent, modal);
         initComponents();
+        ibanFieldBonifico.setText(iban);
     }
 
     /**
@@ -29,63 +32,88 @@ public class InviaBonifico extends javax.swing.JDialog {
         inviaBonifico = new javax.swing.JButton();
         annullaBonifico = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        quantitaField = new javax.swing.JTextField();
+        quantitaFieldBonifico = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        ibanField = new javax.swing.JTextField();
+        ibanFieldBonifico = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        ibanFieldBonificoDest = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Invia bonifico");
-        setAlwaysOnTop(true);
         setResizable(false);
 
         inviaBonifico.setText("INVIA");
+        inviaBonifico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inviaBonificoActionPerformed(evt);
+            }
+        });
 
         annullaBonifico.setText("Annulla");
+        annullaBonifico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annullaBonificoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Invia bonifico");
 
-        quantitaField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        quantitaFieldBonifico.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        quantitaFieldBonifico.setToolTipText("");
+        quantitaFieldBonifico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                quantitaFieldBonificoKeyPressed(evt);
+            }
+        });
 
         jLabel2.setText("Quantità:");
+
+        ibanFieldBonifico.setEditable(false);
 
         jLabel1.setText("IBAN:");
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel3.setText("€");
 
+        jLabel5.setText("IBAN DEST:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(annullaBonifico)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inviaBonifico))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(annullaBonifico)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(inviaBonifico))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addGap(7, 7, 7)
+                                .addComponent(ibanFieldBonifico, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ibanFieldBonificoDest, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(20, 20, 20)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(ibanField, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(quantitaField)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addContainerGap())
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(32, 32, 32)
+                                .addComponent(quantitaFieldBonifico)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,14 +122,18 @@ public class InviaBonifico extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ibanField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ibanFieldBonifico, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ibanFieldBonificoDest, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantitaField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantitaFieldBonifico, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inviaBonifico)
                     .addComponent(annullaBonifico))
@@ -109,7 +141,31 @@ public class InviaBonifico extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inviaBonificoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaBonificoActionPerformed
+        Banca banca = new Banca();
+        if(banca.bonifico(ibanFieldBonifico.getText(), ibanFieldBonificoDest.getText(), Double.parseDouble(quantitaFieldBonifico.getText())) == true){
+            banca.saveCSV();
+            JOptionPane.showMessageDialog(this, "Bonifico effettuato con successo!", "Bonifico", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il bonifico!\nPossibili cause:\n- IBAN non valido\n- IBAN destinatario non valido\n- Quantità non valida", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void quantitaFieldBonificoKeyPressed(java.awt.event.KeyEvent evt) {                                         
+        // Remove text. Accept only numbers
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') || (c == evt.VK_BACK_SPACE) || (c == evt.VK_DELETE))) {
+            evt.consume();
+        }
+    }
+
+    private void annullaBonificoActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
@@ -141,7 +197,7 @@ public class InviaBonifico extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                InviaBonifico dialog = new InviaBonifico(new javax.swing.JFrame(), true);
+                InviaBonifico dialog = new InviaBonifico(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -155,12 +211,14 @@ public class InviaBonifico extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annullaBonifico;
-    private javax.swing.JTextField ibanField;
+    private javax.swing.JTextField ibanFieldBonifico;
+    private javax.swing.JTextField ibanFieldBonificoDest;
     private javax.swing.JButton inviaBonifico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField quantitaField;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField quantitaFieldBonifico;
     // End of variables declaration//GEN-END:variables
 }

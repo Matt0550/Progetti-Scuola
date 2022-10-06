@@ -4,6 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Programmazione/Java/Banca/src/LoginFrame.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/Conto.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/Home.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/Deposita.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/InviaBonifico.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/Preleva.java</file>
+            <file>file:/D:/Programmazione/Java/Banca/src/CambioIntestatario.java</file>
         </group>
     </open-files>
 </project-private>
