@@ -59,6 +59,8 @@ public class Banca {
     public Boolean preleva(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
+                Logs logs = new Logs();
+                logs.addLog("Prelievo", String.valueOf(importo), conti[i].getUserName(), iban, iban);
                 return conti[i].preleva(importo);
             }
         }
@@ -68,6 +70,8 @@ public class Banca {
     public Boolean deposita(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
+                Logs logs = new Logs();
+                logs.addLog("Deposito", String.valueOf(importo), conti[i].getUserName(), iban, iban);
                 return conti[i].deposita(importo);
             }
         }
@@ -80,6 +84,8 @@ public class Banca {
         if (conto1 != null && conto2 != null) {
             if (conto1.preleva(importo)) {
                 conto2.deposita(importo);
+                Logs logs = new Logs();
+                logs.addLog("Bonifico", String.valueOf(importo), conto1.getUserName(), iban1, iban2);
                 return true;
             }
         }
@@ -92,6 +98,8 @@ public class Banca {
                 conti[i].setNome(nome);
                 conti[i].setCognome(cognome);
                 conti[i].setDataDiNascita(dataDiNascita);
+                Logs logs = new Logs();
+                logs.addLog("Modifica Intestatario", "", username, conti[i].getIban(), conti[i].getIban());
                 return true;
             }
         }

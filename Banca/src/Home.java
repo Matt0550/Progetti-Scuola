@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -16,11 +17,8 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     static HashMap<String, String> userData = new HashMap<String, String>();
-    static HashMap<String, String> logsData = new HashMap<String, String>();
     public Home(HashMap<String, String> userData) {
-        this.userData = userData;
-        Logs logs = new Logs();
-        logsData = logs.getLogsOfUser(userData.get("username"));
+        this.userData = userData;        
         System.out.println(userData);
         initComponents();
     }
@@ -186,14 +184,21 @@ public class Home extends javax.swing.JFrame {
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Azioni recenti"));
-
         
         String[] columnNames = {"Azione", "Valore", "Utente", "Iban (da)", "Iban (a)"};
         String[][] data = new String[0][0];
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         actionsTable.setModel(model);
-        
 
+        Logs logs = new Logs();
+        ArrayList<Object> logsData = logs.getLogsOfUser(userData.get("username"));
+        logsData.forEach((log) -> {
+            // Convert the object to a array
+            String[] logData = (String[]) log;
+            // Add the row to the table
+            model.addRow(logData);
+        });
+        
         actionsTable.setRowHeight(30);
             actionsTable.setEnabled(false);
             jScrollPane1.setViewportView(actionsTable);
@@ -275,12 +280,14 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_switchAccountButtonActionPerformed
+        this.dispose();
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setVisible(true);
+    }
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logoutButtonActionPerformed
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments

@@ -132,7 +132,7 @@ public class Preleva extends javax.swing.JDialog {
     private void quantitaFieldPrelevaKeyPressed(java.awt.event.KeyEvent evt) {                                                
         // Remove text. Accept only numbers
         char c = evt.getKeyChar();
-        if (!((c >= '0') && (c <= '9') || (c == evt.VK_BACK_SPACE) || (c == evt.VK_DELETE))) {
+        if (!((c >= '0') && (c <= '9') || (c == java.awt.event.KeyEvent.VK_ENTER) || (c == java.awt.event.KeyEvent.VK_DELETE))) {
             evt.consume();
         }
     }
