@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ public class Logs {
                 logs.put("utente", data[2]);
                 logs.put("iban", data[3]);
                 logs.put("ibanDa", data[4]);
+                logs.put("data", data[5]);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -36,11 +39,14 @@ public class Logs {
         logs.put("utente", utente);
         logs.put("iban", iban);
         logs.put("ibanDa", ibanDa);
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        logs.put("data", now.format(formatter));
         try {
             FileWriter fileWriter = new FileWriter("logs.csv", true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
-            printWriter.println(azione + "," + valore + "," + utente + "," + iban + "," + ibanDa);
+            printWriter.println(azione + "," + valore + "," + utente + "," + iban + "," + ibanDa + "," + now.format(formatter));
             printWriter.close();
             System.out.println("Saved logs.csv");
         } catch (Exception e) {
@@ -62,6 +68,7 @@ public class Logs {
                 logs.put("utente", data[2]);
                 logs.put("iban", data[3]);
                 logs.put("ibanDa", data[4]);
+                logs.put("data", data[5]);
             }
             scanner.close();
         } catch (FileNotFoundException e) {

@@ -17,6 +17,7 @@ import java.util.Scanner;
  */
 public class Banca {
     public Conto[] conti = new Conto[2];
+    Logs logs = new Logs();
 
     public Banca() {
         // Open conti.csv file
@@ -59,7 +60,6 @@ public class Banca {
     public Boolean preleva(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
-                Logs logs = new Logs();
                 logs.addLog("Prelievo", String.valueOf(importo), conti[i].getUserName(), iban, iban);
                 return conti[i].preleva(importo);
             }
@@ -70,7 +70,6 @@ public class Banca {
     public Boolean deposita(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
-                Logs logs = new Logs();
                 logs.addLog("Deposito", String.valueOf(importo), conti[i].getUserName(), iban, iban);
                 return conti[i].deposita(importo);
             }
@@ -84,7 +83,6 @@ public class Banca {
         if (conto1 != null && conto2 != null) {
             if (conto1.preleva(importo)) {
                 conto2.deposita(importo);
-                Logs logs = new Logs();
                 logs.addLog("Bonifico", String.valueOf(importo), conto1.getUserName(), iban1, iban2);
                 return true;
             }
@@ -98,7 +96,6 @@ public class Banca {
                 conti[i].setNome(nome);
                 conti[i].setCognome(cognome);
                 conti[i].setDataDiNascita(dataDiNascita);
-                Logs logs = new Logs();
                 logs.addLog("Modifica Intestatario", "", username, conti[i].getIban(), conti[i].getIban());
                 return true;
             }
@@ -127,6 +124,7 @@ public class Banca {
             File dump = new File("conti.csv");
             newFile.renameTo(dump);
             System.out.println("Saved conti.csv");
+            
         } catch (Exception e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -134,18 +132,31 @@ public class Banca {
     }
 
     // return hash map of user data
-    public HashMap<String, String> getUserData(String username) {
+    public HashMap<String, String> getUserData(String username, String iban) {
         HashMap<String, String> userData = new HashMap<String, String>();
         for (int i = 0; i < conti.length; i++) {
-            if (conti[i].getUserName().equals(username)) {
-                userData.put("nome", conti[i].getNome());
-                userData.put("cognome", conti[i].getCognome());
-                userData.put("dataDiNascita", conti[i].getDataDiNascita());
-                userData.put("iban", conti[i].getIban());
-                userData.put("saldo", Double.toString(conti[i].getSaldo()));
-                userData.put("limite", Double.toString(conti[i].getLimite()));
-                userData.put("username", conti[i].getUserName());
-                userData.put("password", conti[i].getPassword());
+            if(username != null) {
+                if (conti[i].getUserName().equals(username)) {
+                    userData.put("nome", conti[i].getNome());
+                    userData.put("cognome", conti[i].getCognome());
+                    userData.put("dataDiNascita", conti[i].getDataDiNascita());
+                    userData.put("iban", conti[i].getIban());
+                    userData.put("saldo", Double.toString(conti[i].getSaldo()));
+                    userData.put("limite", Double.toString(conti[i].getLimite()));
+                    userData.put("username", conti[i].getUserName());
+                    userData.put("password", conti[i].getPassword());
+                }
+            } else if(iban != null) {
+                if (conti[i].getIban().equals(iban)) {
+                    userData.put("nome", conti[i].getNome());
+                    userData.put("cognome", conti[i].getCognome());
+                    userData.put("dataDiNascita", conti[i].getDataDiNascita());
+                    userData.put("iban", conti[i].getIban());
+                    userData.put("saldo", Double.toString(conti[i].getSaldo()));
+                    userData.put("limite", Double.toString(conti[i].getLimite()));
+                    userData.put("username", conti[i].getUserName());
+                    userData.put("password", conti[i].getPassword());
+                }
             }
         }
         return userData;

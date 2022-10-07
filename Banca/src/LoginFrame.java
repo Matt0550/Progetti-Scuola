@@ -125,7 +125,7 @@ public class LoginFrame extends javax.swing.JFrame {
         Banca banca = new Banca();
         if(banca.checkLogin(username, password)) {
             // Open the home frame
-            HashMap<String, String> userData = banca.getUserData(username);
+            HashMap<String, String> userData = banca.getUserData(username, null);
             Home home = new Home(userData);
             home.setVisible(true);
             this.dispose();

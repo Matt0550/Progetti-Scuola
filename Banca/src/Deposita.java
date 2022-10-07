@@ -14,10 +14,12 @@ public class Deposita extends javax.swing.JDialog {
     /**
      * Creates new form Deposita
      */
+    java.awt.Frame parent;
     public Deposita(java.awt.Frame parent, boolean modal, String iban) { 
         super(parent, modal);
         initComponents();
         ibanFieldDeposita.setText(iban);
+        this.parent = parent;
     }
 
     /**
@@ -145,11 +147,14 @@ public class Deposita extends javax.swing.JDialog {
 
     private void depositaButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         Banca banca = new Banca();
-        banca.deposita(ibanFieldDeposita.getText(), Double.parseDouble(quantitaDepositaField.getText()));
         if (banca.deposita(ibanFieldDeposita.getText(), Double.parseDouble(quantitaDepositaField.getText())) == true) {
             banca.saveCSV();
             JOptionPane.showMessageDialog(this, "Deposito di " + quantitaDepositaField.getText() + "€ effettuato con successo!", "Deposito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+            // Dispose parent frame and open new one
+            parent.dispose();
+            new Home(banca.getUserData(null, ibanFieldDeposita.getText())).setVisible(true);
+            
         } else {
             JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il deposito.\nPossibili cause:\n- Il conto non esiste\n- La quantità da depositare è negativa\n- La quantità da depositore è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
 

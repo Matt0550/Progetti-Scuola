@@ -14,10 +14,12 @@ public class InviaBonifico extends javax.swing.JDialog {
     /**
      * Creates new form InviaBonifico
      */
+    java.awt.Frame parent;
     public InviaBonifico(java.awt.Frame parent, boolean modal, String iban) {
         super(parent, modal);
         initComponents();
         ibanFieldBonifico.setText(iban);
+        this.parent = parent;
     }
 
     /**
@@ -150,6 +152,9 @@ public class InviaBonifico extends javax.swing.JDialog {
             banca.saveCSV();
             JOptionPane.showMessageDialog(this, "Bonifico effettuato con successo!", "Bonifico", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+            // Dispose parent frame and open new one
+            parent.dispose();
+            new Home(banca.getUserData(null, ibanFieldBonifico.getText())).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il bonifico!\nPossibili cause:\n- IBAN non valido\n- IBAN destinatario non valido\n- Quantità non valida", "Errore", JOptionPane.ERROR_MESSAGE);
         }

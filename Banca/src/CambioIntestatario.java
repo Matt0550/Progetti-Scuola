@@ -15,10 +15,12 @@ public class CambioIntestatario extends javax.swing.JDialog {
      * Creates new form CambioIntestatario
      */
     private String username;
+    java.awt.Frame parent;
     public CambioIntestatario(java.awt.Frame parent, boolean modal, String username) {
         super(parent, modal);
         initComponents();
         this.username = username;
+        this.parent = parent;
     }
 
     /**
@@ -136,6 +138,9 @@ public class CambioIntestatario extends javax.swing.JDialog {
             banca.saveCSV();
             JOptionPane.showMessageDialog(this, "Intestatario modificato con successo", "Modifica intestatario", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+            // Dispose parent frame and open new one
+            parent.dispose();
+            new Home(banca.getUserData(username, null)).setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(this, "Errore nella modifica dell'intestatario!\nPossibili cause:\n-Username non esistente", "Modifica intestatario", JOptionPane.ERROR_MESSAGE);

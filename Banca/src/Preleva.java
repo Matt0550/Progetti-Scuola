@@ -14,10 +14,12 @@ public class Preleva extends javax.swing.JDialog {
     /**
      * Creates new form Preleva
      */
+    java.awt.Frame parent;
     public Preleva(java.awt.Frame parent, boolean modal, String iban) {
         super(parent, modal);
         initComponents();
         ibanFieldPreleva.setText(iban);
+        this.parent = parent;
     }
 
     /**
@@ -147,6 +149,9 @@ public class Preleva extends javax.swing.JDialog {
             banca.saveCSV();
             JOptionPane.showMessageDialog(this, "Hai prelevato " + quantitaFieldPreleva.getText() + "€ dal conto " + ibanFieldPreleva.getText());
             this.dispose();
+            // Dispose parent frame and open new one
+            parent.dispose();
+            new Home(banca.getUserData(null, ibanFieldPreleva.getText())).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il prelievo.\nPossibili cause:\n- Il conto non esiste\n- Il conto non ha abbastanza soldi\n- La quantità da prelevare è negativa\n- La quantità da prelevare è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
         }
