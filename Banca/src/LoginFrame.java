@@ -1,3 +1,9 @@
+/*
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -117,21 +123,25 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {
-        // Check the username and password
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
+        try {
+            // Check the username and password
+            String username = usernameTextField.getText();
+            String password = passwordField.getText();
 
-        // Check if the username and password are correct
-        Banca banca = new Banca();
-        if(banca.checkLogin(username, password)) {
-            // Open the home frame
-            HashMap<String, String> userData = banca.getUserData(username, null);
-            Home home = new Home(userData);
-            home.setVisible(true);
-            this.dispose();
-        } else {
-            // Show an error message
-            JOptionPane.showMessageDialog(this, "Username o password errati", "Errore", JOptionPane.ERROR_MESSAGE);
+            // Check if the username and password are correct
+            Banca banca = new Banca();
+            if(banca.checkLogin(username, password)) {
+                // Open the home frame
+                HashMap<String, String> userData = banca.getUserData(username, null);
+                Home home = new Home(userData);
+                home.setVisible(true);
+                this.dispose();
+            } else {
+                // Show an error message
+                JOptionPane.showMessageDialog(this, "Username o password errati", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Errore durante il login", "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -1,9 +1,11 @@
+/*
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 
 /**
  *
@@ -148,15 +150,19 @@ public class InviaBonifico extends javax.swing.JDialog {
 
     private void inviaBonificoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaBonificoActionPerformed
         Banca banca = new Banca();
-        if(banca.bonifico(ibanFieldBonifico.getText(), ibanFieldBonificoDest.getText(), Double.parseDouble(quantitaFieldBonifico.getText())) == true){
-            banca.saveCSV();
-            JOptionPane.showMessageDialog(this, "Bonifico effettuato con successo!", "Bonifico", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            // Dispose parent frame and open new one
-            parent.dispose();
-            new Home(banca.getUserData(null, ibanFieldBonifico.getText())).setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il bonifico!\nPossibili cause:\n- IBAN non valido\n- IBAN destinatario non valido\n- Quantità non valida", "Errore", JOptionPane.ERROR_MESSAGE);
+        try {
+            if(banca.bonifico(ibanFieldBonifico.getText(), ibanFieldBonificoDest.getText(), Double.parseDouble(quantitaFieldBonifico.getText())) == true){
+                banca.saveCSV();
+                JOptionPane.showMessageDialog(this, "Bonifico effettuato con successo!", "Bonifico", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                // Dispose parent frame and open new one
+                parent.dispose();
+                new Home(banca.getUserData(null, ibanFieldBonifico.getText())).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il bonifico!\nPossibili cause:\n- IBAN non valido\n- IBAN destinatario non valido\n- Quantità non valida", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La quantità inserita non è valida", "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
 

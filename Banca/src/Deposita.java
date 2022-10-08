@@ -1,9 +1,10 @@
-import javax.swing.JOptionPane;
-
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -147,17 +148,20 @@ public class Deposita extends javax.swing.JDialog {
 
     private void depositaButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         Banca banca = new Banca();
-        if (banca.deposita(ibanFieldDeposita.getText(), Double.parseDouble(quantitaDepositaField.getText())) == true) {
-            banca.saveCSV();
-            JOptionPane.showMessageDialog(this, "Deposito di " + quantitaDepositaField.getText() + "€ effettuato con successo!", "Deposito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            // Dispose parent frame and open new one
-            parent.dispose();
-            new Home(banca.getUserData(null, ibanFieldDeposita.getText())).setVisible(true);
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il deposito.\nPossibili cause:\n- Il conto non esiste\n- La quantità da depositare è negativa\n- La quantità da depositore è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
-
+        try {
+            if (banca.deposita(ibanFieldDeposita.getText(), Double.parseDouble(quantitaDepositaField.getText())) == true) {
+                banca.saveCSV();
+                JOptionPane.showMessageDialog(this, "Deposito di " + quantitaDepositaField.getText() + "€ effettuato con successo!", "Deposito", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                // Dispose parent frame and open new one
+                parent.dispose();
+                new Home(banca.getUserData(null, ibanFieldDeposita.getText())).setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il deposito.\nPossibili cause:\n- Il conto non esiste\n- La quantità da depositare è negativa\n- La quantità da depositore è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La quantità inserita non è valida", "Errore", JOptionPane.ERROR_MESSAGE);
         }
         
     }

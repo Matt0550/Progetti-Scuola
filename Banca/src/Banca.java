@@ -1,3 +1,9 @@
+/*
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -5,11 +11,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 /**
  *
@@ -49,9 +50,11 @@ public class Banca {
     }
 
     public Conto getConto(String iban) {
-        for (int i = 0; i < conti.length; i++) {
-            if (conti[i].getIban().equals(iban)) {
-                return conti[i];
+        if (iban != null && iban.length() == 27) {
+            for (int i = 0; i < conti.length; i++) {
+                if (conti[i].getIban().equals(iban)) {
+                    return conti[i];
+                }
             }
         }
         return null;
@@ -60,8 +63,10 @@ public class Banca {
     public Boolean preleva(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
-                logs.addLog("Prelievo", String.valueOf(importo), conti[i].getUserName(), iban, iban);
-                return conti[i].preleva(importo);
+                if (conti[i].preleva(importo)) {
+                    logs.addLog("Prelievo", String.valueOf(importo), conti[i].getUserName(), iban, iban);
+                    return true;
+                }
             }
         }
         return false;
@@ -70,8 +75,10 @@ public class Banca {
     public Boolean deposita(String iban, double importo) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getIban().equals(iban)) {
-                logs.addLog("Deposito", String.valueOf(importo), conti[i].getUserName(), iban, iban);
-                return conti[i].deposita(importo);
+                if (conti[i].deposita(importo)) {
+                    logs.addLog("Deposito", String.valueOf(importo), conti[i].getUserName(), iban, iban);
+                    return true;
+                }
             }
         }
         return false;
@@ -82,9 +89,10 @@ public class Banca {
         Conto conto2 = getConto(iban2);
         if (conto1 != null && conto2 != null) {
             if (conto1.preleva(importo)) {
-                conto2.deposita(importo);
-                logs.addLog("Bonifico", String.valueOf(importo), conto1.getUserName(), iban1, iban2);
-                return true;
+                if (conto2.deposita(importo)) {
+                    logs.addLog("Bonifico", String.valueOf(importo), conto1.getUserName(), iban1, iban2);
+                    return true;
+                }
             }
         }
         return false;
@@ -93,11 +101,16 @@ public class Banca {
     public Boolean modificaIntestatario(String username, String nome, String cognome, String dataDiNascita) {
         for (int i = 0; i < conti.length; i++) {
             if (conti[i].getUserName().equals(username)) {
-                conti[i].setNome(nome);
-                conti[i].setCognome(cognome);
-                conti[i].setDataDiNascita(dataDiNascita);
-                logs.addLog("Modifica Intestatario", "", username, conti[i].getIban(), conti[i].getIban());
-                return true;
+                if (nome != null && nome.length() > 0 && cognome != null && cognome.length() > 0 && dataDiNascita != null && dataDiNascita.length() > 0) {
+                    conti[i].setNome(nome);
+                    conti[i].setCognome(cognome);
+                    conti[i].setDataDiNascita(dataDiNascita);
+                    
+                    logs.addLog("Modifica Intestatario", "", username, conti[i].getIban(), conti[i].getIban());
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         return false;

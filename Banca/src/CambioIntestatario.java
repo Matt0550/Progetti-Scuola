@@ -1,9 +1,10 @@
-import javax.swing.JOptionPane;
-
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,6 +135,7 @@ public class CambioIntestatario extends javax.swing.JDialog {
 
     private void modificaIntestatarioActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         Banca banca = new Banca();
+
         if(banca.modificaIntestatario(username, nomeFieldIntestatario.getText(), cognomeFieldIntestatario.getText(), dataNascitaFieldIntestatario.getText()) == true){
             banca.saveCSV();
             JOptionPane.showMessageDialog(this, "Intestatario modificato con successo", "Modifica intestatario", JOptionPane.INFORMATION_MESSAGE);
@@ -143,7 +145,7 @@ public class CambioIntestatario extends javax.swing.JDialog {
             new Home(banca.getUserData(username, null)).setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(this, "Errore nella modifica dell'intestatario!\nPossibili cause:\n-Username non esistente", "Modifica intestatario", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Errore nella modifica dell'intestatario!\nPossibili cause:\n- Dati non validi\n- Utente non esistente", "Modifica intestatario", JOptionPane.ERROR_MESSAGE);
         }
     }
 

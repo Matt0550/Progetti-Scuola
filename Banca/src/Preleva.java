@@ -1,9 +1,10 @@
-import javax.swing.JOptionPane;
-
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+    Developed by:  Matt05
+    Website:       http://matt05.ml
+    GitHub:        @Matt0550
+*/
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -145,15 +146,19 @@ public class Preleva extends javax.swing.JDialog {
 
     private void prelevaButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         Banca banca = new Banca();
-        if (banca.preleva(ibanFieldPreleva.getText(), Double.parseDouble(quantitaFieldPreleva.getText())) == true) {
-            banca.saveCSV();
-            JOptionPane.showMessageDialog(this, "Hai prelevato " + quantitaFieldPreleva.getText() + "€ dal conto " + ibanFieldPreleva.getText());
-            this.dispose();
-            // Dispose parent frame and open new one
-            parent.dispose();
-            new Home(banca.getUserData(null, ibanFieldPreleva.getText())).setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il prelievo.\nPossibili cause:\n- Il conto non esiste\n- Il conto non ha abbastanza soldi\n- La quantità da prelevare è negativa\n- La quantità da prelevare è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (banca.preleva(ibanFieldPreleva.getText(), Double.parseDouble(quantitaFieldPreleva.getText())) == true) {
+                banca.saveCSV();
+                JOptionPane.showMessageDialog(this, "Hai prelevato " + quantitaFieldPreleva.getText() + "€ dal conto " + ibanFieldPreleva.getText());
+                this.dispose();
+                // Dispose parent frame and open new one
+                parent.dispose();
+                new Home(banca.getUserData(null, ibanFieldPreleva.getText())).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Si è verificato un errore durante il prelievo.\nPossibili cause:\n- Il conto non esiste\n- Il conto non ha abbastanza soldi\n- La quantità da prelevare è negativa\n- La quantità da prelevare è maggiore del limite massimo di prelievo", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La quantità inserita non è valida", "Errore", JOptionPane.ERROR_MESSAGE);
         }
         // Show dialog
     }
