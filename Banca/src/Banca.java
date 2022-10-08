@@ -91,6 +91,7 @@ public class Banca {
             if (conto1.preleva(importo)) {
                 if (conto2.deposita(importo)) {
                     logs.addLog("Bonifico", String.valueOf(importo), conto1.getUserName(), iban1, iban2);
+                    logs.addLog("Bonifico", String.valueOf(importo), conto2.getUserName(), iban2, iban1);
                     return true;
                 }
             }
