@@ -7,7 +7,10 @@ Implementare la classe Numero che memorizzi un numero intero. La classe dovrà a
 - radice, che ne restituisca la radice;
 - fattoriale, che ne restituisca il fattoriale, esempio: !5 = 5*4*3*2*1
 - negazione, che inverta il segno di Numero
-- binario ed esadecimale, che restituisca rispettivamente il corrispondente in binario ed esadecimale. 
+- binario ed esadecimale, che restituisca rispettivamente il corrispondente in binario ed esadecimale.
+- Incrementa (di uno)
+- Decrementa (di uno)
+- Metodo che ritorna il calcolo della seguente formula x^2 + x + 1
 */
 
 public class Main {
@@ -19,5 +22,8 @@ public class Main {
         System.out.println("Radice: " + num.getRadice());
         System.out.println("Binario: " + num.toBinary());
         System.out.println("Esadecimale: " + num.toHex());
+        System.out.println("Incrementa: " + num.incrementa());
+        System.out.println("Decrementa: " + num.decrementa());
+        System.out.println("Equazione: " + num.equazione(1, 4, 2));
     }   
 }
