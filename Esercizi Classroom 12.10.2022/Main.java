@@ -17,5 +17,7 @@ public class Main {
         System.out.println("Negativo: " + num.getNegativo());
         System.out.println("Quadrato: " + num.getQuadrato());
         System.out.println("Radice: " + num.getRadice());
+        System.out.println("Binario: " + num.toBinary());
+        System.out.println("Esadecimale: " + num.toHex());
     }   
 }
