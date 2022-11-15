@@ -106,10 +106,10 @@ public class Immobile {
             } else {
                 throw new Exception("Categoria non valida");
             }
-            return valore;
         } catch (Exception e) {
             System.out.println(e);
         }
+        return valore;
     }
 
     public double calcolaTasse() {
@@ -124,10 +124,10 @@ public class Immobile {
             } else {
                 canone = mq * 7;
             }
-            return canone;
         } catch (Exception e) {
             System.out.println(e);
         }
+        return canone;
     }
 
     public void stampa() throws Exception {
