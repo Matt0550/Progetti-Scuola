@@ -81,31 +81,35 @@ public class Immobile {
     }
 
     public double calcolaValore() throws Exception {
-        if (categoria.equals("Residenziale")) {
-            valore = mq * 700;
-            if (vetusta >= 10 && vetusta < 20) {
-                valore -= valore * 0.15;
-            } else if (vetusta >= 20) {
-                valore -= valore * 0.27;
+        try {
+            if (categoria.equals("Residenziale")) {
+                valore = mq * 700;
+                if (vetusta >= 10 && vetusta < 20) {
+                    valore -= valore * 0.15;
+                } else if (vetusta >= 20) {
+                    valore -= valore * 0.27;
+                }
+            } else if (categoria.equals("Pertinenza")) {
+                valore = mq * 500;
+                if (vetusta >= 10 && vetusta < 20) {
+                    valore -= valore * 0.10;
+                } else if (vetusta >= 20) {
+                    valore -= valore * 0.18;
+                }
+            } else if (categoria.equals("Commerciale")) {
+                valore = mq * 950;
+                if (vetusta >= 10 && vetusta < 20) {
+                    valore -= valore * 0.13;
+                } else if (vetusta >= 20) {
+                    valore -= valore * 0.22;
+                }
+            } else {
+                throw new Exception("Categoria non valida");
             }
-        } else if (categoria.equals("Pertinenza")) {
-            valore = mq * 500;
-            if (vetusta >= 10 && vetusta < 20) {
-                valore -= valore * 0.10;
-            } else if (vetusta >= 20) {
-                valore -= valore * 0.18;
-            }
-        } else if (categoria.equals("Commerciale")) {
-            valore = mq * 950;
-            if (vetusta >= 10 && vetusta < 20) {
-                valore -= valore * 0.13;
-            } else if (vetusta >= 20) {
-                valore -= valore * 0.22;
-            }
-        } else {
-            throw new Exception("Categoria non valida");
+            return valore;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return valore;
     }
 
     public double calcolaTasse() {
@@ -114,12 +118,16 @@ public class Immobile {
     }
 
     public double calcolaCanone() {
-        if (categoria.equals("Commerciale")) {
-            canone = (mq * 7) + 2;
-        } else {
-            canone = mq * 7;
+        try {
+            if (categoria.equals("Commerciale")) {
+                canone = (mq * 9);
+            } else {
+                canone = mq * 7;
+            }
+            return canone;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return canone;
     }
 
     public void stampa() throws Exception {
