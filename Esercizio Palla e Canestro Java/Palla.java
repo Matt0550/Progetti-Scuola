@@ -3,19 +3,44 @@ public class Palla {
     private int y;
     private int speedX;
     private int speedY;
+    private int angle;
     private Canestro canestro;
+    private int originalX;
+    private int originalY;
 
-    public Palla(int x, int y, int speedX, int speedY, Canestro canestro) {
-        this.x = x;
-        this.y = y;
-        this.speedX = speedX;
-        this.speedY = speedY;
+    public Palla(int x, int y, int speedX, int speedY, int angle, Canestro canestro) {
         this.canestro = canestro;
+        this.angle = angle;
+        setX(x);
+        setY(y);
+        setSpeedX(speedX);
+        setSpeedY(speedY);
     }
 
-    public void move() {
-        x += speedX;
-        y += speedY;
+    public void move(String direction) {
+        // Check if the ball touches the wall
+        if (direction.equals("up") && getY()-getSpeedY() > 0) {
+            setY(getY() - getSpeedY());
+        } else if (direction.equals("down") && getY() + getSpeedY() < canestro.getHeight()) {
+            setY(getY() + getSpeedY());
+        } else if (direction.equals("left") && getX()-getSpeedX() > 0) {
+            setX(getX() - getSpeedX());
+        } else if (direction.equals("right") && getX() + getSpeedX() < canestro.getWidth()) {
+            setX(getX() + getSpeedX());
+        }
+    }
+
+    public void randomMove() {
+        int random = (int) (Math.random() * 4);
+        if (random == 0) {
+            move("up");
+        } else if (random == 1) {
+            move("down");
+        } else if (random == 2) {
+            move("left");
+        } else if (random == 3) {
+            move("right");
+        }
     }
 
     public int getX() {
@@ -35,76 +60,109 @@ public class Palla {
     }
 
     public void setSpeedX(int speedX) {
-        this.speedX = speedX;
+        if (speedX > 0 && speedX <= 10) {
+            this.speedX = speedX;
+        } else {
+            throw new IllegalArgumentException("SpeedX must be between 0 and 10");
+        }
     }
 
     public void setSpeedY(int speedY) {
-        this.speedY = speedY;
+        if (speedY > 0 && speedY <= 10) {
+            this.speedY = speedY;
+        } else {
+            throw new IllegalArgumentException("SpeedY must be between 0 and 10");
+        }
     }
 
     public void setX(int x) {
-        this.x = x;
+        if (x > 0 && x <= canestro.getWidth()) {
+            if(originalX == 0) {
+                originalX = x;
+            }
+            this.x = x;
+        } else {
+            throw new IllegalArgumentException("x must be between 0 and " + canestro.getWidth());
+        }
     }
 
     public void setY(int y) {
-        this.y = y;
-    }
-
-    // Predict the line of the ball's trajectory and check if it will hit the basket. Print the x and y of all the points on the trajectory.
-    public void draw2() {
-        int x = this.x;
-        int y = this.y;
-        int speedX = this.speedX;
-        int speedY = this.speedY;
-        int canestroX = this.canestro.getX();
-        int canestroY = this.canestro.getY();
-        int canestroWidth = this.canestro.getWidth();
-        int canestroHeight = this.canestro.getHeight();
-
-        // Print the x and y of all the points on the trajectory.
-        while (true) {
-            System.out.println("x: " + x + " y: " + y);
-            x += speedX;
-            y += speedY;
-
-            // Check if the ball will hit the basket.
-            if (x >= canestroX && x <= canestroX + canestroWidth && y >= canestroY && y <= canestroY + canestroHeight) {
-                System.out.println("The ball will hit the basket.");
-                break;
+        if (y > 0 && y <= canestro.getHeight()) {
+            if(originalY == 0) {
+                originalY = y;
             }
+            this.y = y;
+        } else {
+            throw new IllegalArgumentException("y must be between 0 and " + canestro.getHeight());
         }
     }
 
-    // Create a grid and mark the position of the ball and the basket
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        if (angle > 0 && angle <= 360) {
+            this.angle = angle;
+        } else {
+            throw new IllegalArgumentException("Angle must be between 0 and 360");
+        }
+    }    
+
+    // Create a grid and mark the position of the ball and the basket and print the trajectory of the ball.
     /*
     Example:
     1 2 3 4 5 6 7 8 9 10
-    2 P
+    2 
     3
     4
-    5       C
+    5       
     6
-    7
-    8
-    9
-    10
+    7        
+    8         
+    9            
+    10 P               C
     */
     public void draw() {
         for (int i = 0; i <= canestro.getHeight(); i++) {
-            for (int j = 0; j <= canestro.getWidth(); j++) {
-                if (i == 0) {
-                    System.out.print(j + " ");
-                } else if (j == 0) {
-                    System.out.print(i + " ");
-                } else if (i == y && j == x) {
-                    System.out.print("P ");
-                } else if (i == canestro.getY() && j == canestro.getX()) {
-                    System.out.print("C ");
-                } else {
-                    System.out.print("  ");
+            // Mark the position of the ball and the basket with P and C. Fill the rest of the grid with · and write the numbers of the rows and columns.
+            if (i == 0) {
+                for (int j = 0; j <= canestro.getWidth(); j++) {
+                    if (j == 0) {
+                        if (i > 10) {
+                            System.out.print("   ");
+                        } else {
+                            System.out.print("    ");
+                        }
+                    } else {
+                        System.out.print(j + "  ");
+                    }
                 }
+                System.out.println();
+            } else {
+                for (int j = 0; j <= canestro.getWidth(); j++) {
+                    if (j == 0) {
+                        if (i < 10) {
+                            System.out.print(i + "  ");
+                        } else {
+                            System.out.print(i + " ");
+                        }
+                    } else if (j == canestro.getX() && i == canestro.getY()) {
+                        System.out.print(" C ");
+                    } else if (j == x && i == y) {
+                        System.out.print(" P ");
+                    } else {
+                        System.out.print(" · ");
+                    }
+                }
+                System.out.println();
             }
-            System.out.println();
+
         }
+    }
+
+    public void reset() {
+        setX(originalX);
+        setY(originalY);
     }
 }

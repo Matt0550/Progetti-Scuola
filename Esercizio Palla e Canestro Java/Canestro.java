@@ -5,10 +5,10 @@ public class Canestro {
     private int height;
 
     public Canestro(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        setWidth(width);
+        setHeight(height);
+        setX(x);
+        setY(y);
     }
 
     public int getX() {
@@ -28,19 +28,34 @@ public class Canestro {
     }
 
     public void setX(int x) {
-        this.x = x;
+        if (x > 0 && x <= getWidth()) {
+            this.x = x;
+        } else {
+            throw new IllegalArgumentException("x must be between 0 and " + getWidth());
+        }
     }
 
     public void setY(int y) {
-        this.y = y;
+        if (y > 0 && y <= getHeight()) {
+            this.y = y;
+        } else {
+            throw new IllegalArgumentException("y must be between 0 and " + getHeight());
+        }
     }
 
     public void setWidth(int width) {
-        this.width = width;
+        if (width > 0 && width <= 30) {
+            this.width = width;
+        } else {
+            throw new IllegalArgumentException("Width must be between 0 and 30");
+        }
     }
-
     public void setHeight(int height) {
-        this.height = height;
+        if (height > 0 && height <= 30) {
+            this.height = height;
+        } else {
+            throw new IllegalArgumentException("Height must be between 0 and 30");
+        }
     }
 
     
