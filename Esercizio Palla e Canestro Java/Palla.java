@@ -136,7 +136,7 @@ public class Palla {
      * 9 · · · · · · · · · ·
      * 10 · · · · · · · · · C
     */
-    public void draw() {
+    public void drawGrid() {
         for (int i = 0; i <= canestro.getHeight(); i++) {
             if (i == 0) {
                 // Write the numbers of the columns
@@ -163,9 +163,9 @@ public class Palla {
                             System.out.print(i + " ");
                         }
                     } else if (j == canestro.getX() && i == canestro.getY()) {
-                        System.out.print(" C ");
+                        System.out.print(" " + ConsoleColors.GREEN + "C" + ConsoleColors.RESET + " ");
                     } else if (j == x && i == y) {
-                        System.out.print(" P ");
+                        System.out.print(" " +ConsoleColors.CYAN + "P" + ConsoleColors.RESET + " ");
                     } else {
                         System.out.print(" · ");
                     }
@@ -248,7 +248,7 @@ public class Palla {
 
             switch (difficulty) {
                 case 1:
-                    maxMoves += 500;
+                    maxMoves += 5;
                     canestro.setCanestro(difficulty);
                     break;
                 case 2:
@@ -260,6 +260,8 @@ public class Palla {
                     canestro.setCanestro(difficulty);
                     break;
             }
+            System.out.println("maxMoves: " + maxMoves);
+
         } else {
             throw new IllegalArgumentException("Difficulty must be between 1 and 3");
         }
@@ -267,34 +269,93 @@ public class Palla {
 
     public void selectDifficulty() {
         clearScreen();
+        System.out.println(ConsoleColors.BLUE + "Welcome to the game of the ball and the basket" + ConsoleColors.RESET);
         // Select the difficulty of the game
         System.out.println("Select the difficulty of the game:");
-        System.out.println("1. Easy");
-        System.out.println("2. Medium");
-        System.out.println("3. Hard");
+        System.out.println("1. " + ConsoleColors.GREEN + "Easy" + ConsoleColors.RESET);
+        System.out.println("2. " + ConsoleColors.YELLOW + "Medium" + ConsoleColors.RESET);
+        System.out.println("3. " + ConsoleColors.RED + "Hard" + ConsoleColors.RESET);
         System.out.print("Select a number: ");
         int difficulty = scanner.nextInt();
 
         setDifficulty(difficulty);
+        randomCoordinates();
     }
 
     public void drawGame() {
         clearScreen();
-        draw();
-        System.out.println("Moves: " + moves + " - Max moves: " + maxMoves + " - Speed: " + getSpeedX() + " - Score: " + score + " - X: " + getX() + " - Y: " + getY());
+        System.out.println("Use " + ConsoleColors.CYAN + "WASD" + ConsoleColors.RESET + " to move the ball");
+        System.out.println("Use " + ConsoleColors.CYAN + "R" + ConsoleColors.RESET + " to reset the ball");
+        System.out.println("Use " + ConsoleColors.CYAN + "T" + ConsoleColors.RESET + " to random move the ball");
+        System.out.println("Use " + ConsoleColors.GREEN + "P" + ConsoleColors.RESET + " to increase the speed");
+        System.out.println("Use " + ConsoleColors.RED + "O" + ConsoleColors.RESET + " to decrease the speed");
+        System.out.println("Use " + ConsoleColors.CYAN + "Q" + ConsoleColors.RESET + " to quit");
+        drawGrid();
+        String moveString, maxMoveString, speedString, scoreString, difficultyString;
+        // Check moves
+        if (maxMoves/2 > moves) {
+            moveString = ConsoleColors.GREEN + moves + ConsoleColors.RESET;
+        } else if (maxMoves/2 == moves) {
+            moveString = ConsoleColors.YELLOW + moves + ConsoleColors.RESET;
+        } else {
+            moveString = ConsoleColors.RED + moves + ConsoleColors.RESET;
+        }
+
+        maxMoveString = ConsoleColors.GREEN + maxMoves + ConsoleColors.RESET;
+
+        // Check speed
+        if (maxSpeedX/2 > getSpeedX()) {
+            speedString = ConsoleColors.GREEN + getSpeedX() + ConsoleColors.RESET;
+        } else if (maxSpeedX/2 == getSpeedX()) {
+            speedString = ConsoleColors.YELLOW + getSpeedX() + ConsoleColors.RESET;
+        } else {
+            speedString = ConsoleColors.RED + getSpeedX() + ConsoleColors.RESET;
+        }
+
+        // Check score
+        if (score < 0) {
+            scoreString = ConsoleColors.RED + score + ConsoleColors.RESET;
+        } else {
+            scoreString = ConsoleColors.GREEN + score + ConsoleColors.RESET;
+        }
+
+        // Check difficulty
+        switch (difficulty) {
+            case 1:
+                difficultyString = ConsoleColors.GREEN + "Easy" + ConsoleColors.RESET;
+                break;
+            case 2:
+                difficultyString = ConsoleColors.YELLOW + "Medium" + ConsoleColors.RESET;
+                break;
+            case 3:
+                difficultyString = ConsoleColors.RED + "Hard" + ConsoleColors.RESET;
+                break;
+            default:
+                difficultyString = ConsoleColors.RED + "Unknown" + ConsoleColors.RESET;
+                break;
+        }
+        System.out.println("Moves: " + moveString + " - Max moves: " + maxMoveString + " - Speed: " + speedString + " - Score: " + scoreString + " - Difficulty: " + difficultyString + " - X: " + getX() + " - Y: " + getY());
+
+        // Check if the ball is inside the basket
+        if (getX() == canestro.getX() && getY() == canestro.getY()) {
+            score += 10;
+            reset();
+            System.out.println("You scored " + ConsoleColors.GREEN + "10" + ConsoleColors.RESET + " points!");
+        }
+        // Check the moves
+        if (moves >= maxMoves) {
+            score -= 3;
+            reset();
+            System.out.println("You lost " + ConsoleColors.RED + "3" + ConsoleColors.RESET + " points!");
+        }
     }
 
     public void startGame() {
         // Start the game
         selectDifficulty();
-        System.out.println("Use WASD to move the ball");
-        System.out.println("Use R to reset the ball");
-        System.out.println("Use T to random move the ball");
-        System.out.println("Use P to increase the speed");
-        System.out.println("Use O to decrease the speed");
-        System.out.println("Use Q to quit");
+
         while (true) {
-            drawGame();   
+            drawGame();
             
             String input = scanner.nextLine();
             // Split the input in case the user pressed more than one key
@@ -327,18 +388,6 @@ public class Palla {
                     setSpeedX(getSpeedX() - 1);
                     setSpeedY(getSpeedY() - 1);
                 }
-            }
-            // Check if the ball is inside the basket
-            if (getX() == canestro.getX() && getY() == canestro.getY()) {
-                System.out.println("You won!");
-                score += 10;
-                reset();
-            }
-            // Check the moves
-            if (moves >= maxMoves) {
-                System.out.println("You lost!");
-                score -= 3;
-                reset();
             }
         }
     }

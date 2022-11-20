@@ -49,14 +49,14 @@ public class Canestro {
         if (width > 0 && width <= maxWidth) {
             this.width = width;
         } else {
-            throw new IllegalArgumentException("Width must be between 1 and 30");
+            throw new IllegalArgumentException("Width must be between 1 and " + maxWidth);
         }
     }
     public void setHeight(int height) {
         if (height > 0 && height <= maxHeight) {
             this.height = height;
         } else {
-            throw new IllegalArgumentException("Height must be between 1 and 30");
+            throw new IllegalArgumentException("Height must be between 1 and " + maxHeight);
         }
     }
 
