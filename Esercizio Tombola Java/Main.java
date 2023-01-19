@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.io.IOException;
 
 /**
  * Main
  */
 public class Main {
-
     public static void main(String[] args) {
 
         // Read keyboard input
@@ -33,20 +33,11 @@ public class Main {
                     cartelle[i].stampaCartella();
                 }
 
-                // Chiedo all'utente di chiudere un numero
-                System.out.println("Inserisci un numero da chiudere");
-                int numeroDaChiudere = scanner.nextInt();
-                scanner.nextLine();
-                while (numeroDaChiudere < 1 || numeroDaChiudere > 90) {
-                    System.out.println("Input non valido");
-                    numeroDaChiudere = scanner.nextInt();
-                    scanner.nextLine();
-                }
-                
                 while (true) {
                     // Chiedo all'utente di chiudere un numero
                     System.out.println("Inserisci un numero da chiudere");
-                    numeroDaChiudere = scanner.nextInt();
+                    int numeroDaChiudere = scanner.nextInt();
+
                     while (numeroDaChiudere < 1 || numeroDaChiudere > 90) {
                         System.out.println("Input non valido");
                         numeroDaChiudere = scanner.nextInt();
@@ -55,6 +46,21 @@ public class Main {
                     // Chiudo il numero
                     for (int i = 0; i < numeroCartelle; i++) {
                         cartelle[i].chiudiNumero(numeroDaChiudere);
+                    }
+                    final String os = System.getProperty("os.name");
+
+                    if (os.contains("Windows")) {
+                        try {
+                            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            new ProcessBuilder("clear").inheritIO().start().waitFor();
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     // Stampo le cartelle
                     for (int i = 0; i < numeroCartelle; i++) {

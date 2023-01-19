@@ -4,24 +4,26 @@ import java.util.ArrayList;
  * Cartella
  */
 public class Cartella {
-
     private int numeroRighe = 3;
     private int numeroColonne = 9;
     private int numeriPerRiga = 5;
     private int numeriPerCartella = numeroRighe * numeriPerRiga;
     
     private int numeriCartella[][] = new int[numeroRighe][numeroColonne];
-    private ArrayList<Integer> numeriUsati = new ArrayList<Integer>();
+    private int numeriUsati[][] = new int[numeroRighe][numeroColonne];
 
     public void generaNumeri() {
         ArrayList<Integer> numeri_generati = new ArrayList<Integer>();
-        // Fill the array with 0
-        for (int i = 0; i < 90; i++) {
-            numeriUsati.add(0);
+        
+        for (int i = 0; i < numeroRighe; i++) {
+            for (int j = 0; j < numeroColonne; j++) {
+                numeriCartella[i][j] = 0;
+            }
         }
 
         for (int i = 0; i < numeriPerCartella; i++) {
             // Genero un numero casuale tra 1 e 90 verificando che non sia già stato generato
+            // Verifico che ci siano obbligatoriamente 5 numeri per riga. Nel caso rigenero il numero
             int numero = (int) (Math.random() * 90 + 1);
             while (numeri_generati.contains(numero)) {
                 numero = (int) (Math.random() * 90 + 1);
@@ -41,6 +43,7 @@ public class Cartella {
                 numeri_generati.remove(i);
                 i--;
             }
+
         }
 
         for (int i = 0; i < numeriPerCartella; i++) {
@@ -66,8 +69,67 @@ public class Cartella {
         }
     }
 
+
+    public void verificaVincite() {
+        for (int i = 0; i < numeriUsati.length; i++) {
+            int contatore = 0;
+            ArrayList<Integer> numeri = new ArrayList<Integer>();
+
+            for (int j = 0; j < numeriUsati[i].length; j++) {
+                if (numeriUsati[i][j] != 0) {
+                    contatore++;
+                    numeri.add(numeriUsati[i][j]);
+                }
+            }
+
+            if (contatore == 5) {
+                System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.BLUE + "cinquina" + ConsoleColors.RESET + " con i seguenti numeri: ");
+                for (int j = 0; j < numeri.size(); j++) {
+                    System.out.print(numeri.get(j) + " ");
+                }
+                System.out.println();
+            }
+
+            if (contatore == 4) {
+                System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.YELLOW + "quaterna" + ConsoleColors.RESET + " con i seguenti numeri: ");
+                for (int j = 0; j < numeri.size(); j++) {
+                    System.out.print(numeri.get(j) + " ");
+                }
+                System.out.println();
+            }
+
+            if (contatore == 3) {
+                System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.GREEN + "terno" + ConsoleColors.RESET + " con i seguenti numeri: ");
+                for (int j = 0; j < numeri.size(); j++) {
+                    System.out.print(numeri.get(j) + " ");
+                }
+                System.out.println();
+            }
+
+            if (contatore == 2) {
+                System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.RED + "ambo" + ConsoleColors.RESET + " con i seguenti numeri: ");
+                for (int j = 0; j < numeri.size(); j++) {
+                    System.out.print(numeri.get(j) + " ");
+                }
+                System.out.println();
+            }
+        }
+        // Check for tombola
+        int contatore = 0;
+        for (int i = 0; i < numeriUsati.length; i++) {
+            for (int j = 0; j < numeriUsati[i].length; j++) {
+                if (numeriUsati[i][j] != 0) {
+                    contatore++;
+                }
+            }
+        }
+        if (contatore == 15) {
+            System.out.println("HAI FATTO " + ConsoleColors.PURPLE + "TOMBOLA" + ConsoleColors.RESET);
+        }
+    }
+
     public void generaCartella() {
-        generaNumeri();
+        verificaVincite();
         System.out.println("-------------------Cartella------------------");
         // Stampo la cartella. 5 numeri per riga e 4 spazi tra i numeri usando i separatori
         for (int i = 0; i < numeroRighe; i++) {
@@ -81,15 +143,17 @@ public class Cartella {
                     }
                 } else {
                     // Verifico se il numero è già stato usato
-                    if (numeriUsati.get(numeriCartella[i][j] - 1) == 0) {
+                    if (numeriUsati[i][j] == 0) {
                         System.out.print(" " + numeriCartella[i][j] + " ");
                     } else {
                         if (j == 0) { // Se è la prima colonna metto 3 spazi
                             System.out.print(" X ");
                         } else { // Altrimenti metto 4 spazi
-                            System.out.print("  X");
+                            System.out.print("  X ");
                         }
                     }
+
+                    
                 }
                 System.out.print("|");
             }
@@ -98,15 +162,24 @@ public class Cartella {
         System.out.println("---------------------------------------------");
     }
 
-
     public void chiudiNumero(int numeroDaChiudere) {
         // Aggiorno l'array dei numeri usati
-        numeriUsati.set(numeroDaChiudere - 1, 1);
+        for (int i = 0; i < numeriUsati.length; i++) {
+            for (int j = 0; j < numeriUsati[i].length; j++) {
+                if (numeriCartella[i][j] == numeroDaChiudere) {
+                    numeriUsati[i][j] = numeroDaChiudere;
+                }
+            }
+        }
 
     }
 
     public void stampaCartella() {
         generaCartella();
         System.out.println();
+    }
+
+    public Cartella() {
+        generaNumeri();
     }
 }
