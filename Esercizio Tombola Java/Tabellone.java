@@ -50,6 +50,7 @@ public class Tabellone {
             return 0;
         }
     }
+    String vinciteUscite[] = new String[5];
 
     public void verificaVincite() {
         // Verifico le vincite per cartella. Prendo i numeri a 5 a 5 
@@ -70,7 +71,6 @@ public class Tabellone {
                 cartella = calcoloNumeroCartella(numeri.get(j));
             }
 
-            String vinciteUscite[] = new String[4];
 
             if (contatore == 5 && vinciteUscite[0] != "cinquina") {
                 System.out.println("Cartella " + cartella + ": " + "Hai fatto " + ConsoleColors.BLUE + "cinquina" + ConsoleColors.RESET + " con i seguenti numeri: ");
@@ -114,26 +114,48 @@ public class Tabellone {
             }
         }
 
-        // Verifico la tombola. Prendo i numeri a 15 a 15
-        for (int i = 0; i < numeriUsati.length; i += 15) {
-            int contatore = 0;
-            ArrayList<Integer> numeri = new ArrayList<Integer>();
+        // Verifico la tombola (se 15 numeri della stessa cartella sono usciti)
+        int contatoreCartella1 = 0;
+        int contatoreCartella2 = 0;
+        int contatoreCartella3 = 0;
+        int contatoreCartella4 = 0;
+        int contatoreCartella5 = 0;
+        int contatoreCartella6 = 0;
 
-            // Conto i numeri usati
-            for (int j = 0; j < 15; j++) {
-                if (numeriUsati[i + j] != 0) {
-                    contatore++;
-                    numeri.add(numeriUsati[i + j]);
-                }
+        for (int i = 0; i < numeriUsati.length; i++) {
+            if (calcoloNumeroCartella(numeriUsati[i]) == 1) {
+                contatoreCartella1++;
+            } else if (calcoloNumeroCartella(numeriUsati[i]) == 2) {
+                contatoreCartella2++;
+            } else if (calcoloNumeroCartella(numeriUsati[i]) == 3) {
+                contatoreCartella3++;
+            } else if (calcoloNumeroCartella(numeriUsati[i]) == 4) {
+                contatoreCartella4++;
+            } else if (calcoloNumeroCartella(numeriUsati[i]) == 5) {
+                contatoreCartella5++;
+            } else if (calcoloNumeroCartella(numeriUsati[i]) == 6) {
+                contatoreCartella6++;
             }
+        }
 
-            if (contatore == 15) {
-                System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con i seguenti numeri: ");
-                for (int j = 0; j < numeri.size(); j++) {
-                    System.out.print(numeri.get(j) + " ");
-                }
-                System.out.println();
-            }
+        if (contatoreCartella1 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 1");
+            vinciteUscite[4] = "tombola";
+        } else if (contatoreCartella2 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 2");
+            vinciteUscite[4] = "tombola";
+        } else if (contatoreCartella3 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 3");
+            vinciteUscite[4] = "tombola";
+        } else if (contatoreCartella4 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 4");
+            vinciteUscite[4] = "tombola";
+        } else if (contatoreCartella5 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 5");
+            vinciteUscite[4] = "tombola";
+        } else if (contatoreCartella6 == 15 && vinciteUscite[4] != "tombola") {
+            System.out.println("Hai fatto " + ConsoleColors.PURPLE + "tombola" + ConsoleColors.RESET + " con la cartella 6");
+            vinciteUscite[4] = "tombola";
         }
     }
 

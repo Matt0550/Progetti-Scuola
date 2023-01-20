@@ -4,9 +4,6 @@ public class ConsoleColors {
 
     public static final String RESET = "\033[0m";  // Text Reset
 
-
-
-
     // Regular Colors
 
     public static final String BLACK = "\033[0;30m";   // BLACK
@@ -24,9 +21,6 @@ public class ConsoleColors {
     public static final String CYAN = "\033[0;36m";    // CYAN
 
     public static final String WHITE = "\033[0;37m";   // WHITE
-
-
-
 
     // Bold
 
@@ -46,9 +40,6 @@ public class ConsoleColors {
 
     public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
 
-
-
-
     // Underline
 
     public static final String BLACK_UNDERLINED = "\033[4;30m";  // BLACK
@@ -66,9 +57,6 @@ public class ConsoleColors {
     public static final String CYAN_UNDERLINED = "\033[4;36m";   // CYAN
 
     public static final String WHITE_UNDERLINED = "\033[4;37m";  // WHITE
-
-
-
 
     // Background
 
@@ -88,9 +76,6 @@ public class ConsoleColors {
 
     public static final String WHITE_BACKGROUND = "\033[47m";  // WHITE
 
-
-
-
     // High Intensity
 
     public static final String BLACK_BRIGHT = "\033[0;90m";  // BLACK
@@ -109,9 +94,6 @@ public class ConsoleColors {
 
     public static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
 
-
-
-
     // Bold High Intensity
 
     public static final String BLACK_BOLD_BRIGHT = "\033[1;90m"; // BLACK
@@ -129,9 +111,6 @@ public class ConsoleColors {
     public static final String CYAN_BOLD_BRIGHT = "\033[1;96m";  // CYAN
 
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
-
-
-
 
     // High Intensity backgrounds
 

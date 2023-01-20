@@ -67,8 +67,21 @@ public class Cartella {
                 }
             }
         }
+
+        // Se nell'ultima riga ci sono 4 numeri svuoto l'array e richiamo la funzione
+        int contatore = 0;
+        for (int i = 0; i < 9; i++) {
+            if (numeriCartella[2][i] != 0) {
+                contatore++;
+            }
+        }
+        if (contatore < 5) {
+            numeri_generati.clear();
+            generaNumeri();
+        }
     }
 
+    String vinciteUscite[] = new String[4];
 
     public void verificaVincite() {
         for (int i = 0; i < numeriUsati.length; i++) {
@@ -82,36 +95,40 @@ public class Cartella {
                 }
             }
 
-            if (contatore == 5) {
+            if (contatore == 5 && vinciteUscite[0] != "cinquina") {
                 System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.BLUE + "cinquina" + ConsoleColors.RESET + " con i seguenti numeri: ");
                 for (int j = 0; j < numeri.size(); j++) {
                     System.out.print(numeri.get(j) + " ");
                 }
                 System.out.println();
+                vinciteUscite[0] = "cinquina";
             }
 
-            if (contatore == 4) {
+            if (contatore == 4 && vinciteUscite[1] != "quaterna") {
                 System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.YELLOW + "quaterna" + ConsoleColors.RESET + " con i seguenti numeri: ");
                 for (int j = 0; j < numeri.size(); j++) {
                     System.out.print(numeri.get(j) + " ");
                 }
                 System.out.println();
+                vinciteUscite[1] = "quaterna";
             }
 
-            if (contatore == 3) {
+            if (contatore == 3 && vinciteUscite[2] != "terno") {
                 System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.GREEN + "terno" + ConsoleColors.RESET + " con i seguenti numeri: ");
                 for (int j = 0; j < numeri.size(); j++) {
                     System.out.print(numeri.get(j) + " ");
                 }
                 System.out.println();
+                vinciteUscite[2] = "terno";
             }
 
-            if (contatore == 2) {
+            if (contatore == 2 && vinciteUscite[3] != "ambo") {
                 System.out.println("Riga " + (i + 1) + ": " + "Hai fatto " + ConsoleColors.RED + "ambo" + ConsoleColors.RESET + " con i seguenti numeri: ");
                 for (int j = 0; j < numeri.size(); j++) {
                     System.out.print(numeri.get(j) + " ");
                 }
                 System.out.println();
+                vinciteUscite[3] = "ambo";
             }
         }
         // Check for tombola
@@ -147,13 +164,11 @@ public class Cartella {
                         System.out.print(" " + numeriCartella[i][j] + " ");
                     } else {
                         if (j == 0) { // Se è la prima colonna metto 3 spazi
-                            System.out.print(" X ");
+                            System.out.print(ConsoleColors.RED + " X " + ConsoleColors.RESET);
                         } else { // Altrimenti metto 4 spazi
-                            System.out.print("  X ");
+                            System.out.print(ConsoleColors.RED + "  X " + ConsoleColors.RESET);
                         }
                     }
-
-                    
                 }
                 System.out.print("|");
             }
@@ -171,7 +186,6 @@ public class Cartella {
                 }
             }
         }
-
     }
 
     public void stampaCartella() {
