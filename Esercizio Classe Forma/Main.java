@@ -7,7 +7,7 @@ public class Main {
         Forma f = new Forma("Forma");
         f.stampa();
 
-        Triangolo t = new Triangolo("Triangolo", 10, 5);
+        Triangolo t = new Triangolo("Triangolo", 10, 5, 4);
         t.stampa();
 
         Rettangolo r = new Rettangolo("Rettangolo", 10, 5);
