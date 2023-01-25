@@ -5,10 +5,11 @@ public class Triangolo extends Forma {
     private double base;
     private double altezza;
 
-    public Triangolo(String nome, double base, double altezza) {
+    public Triangolo(String nome, double base, double altezza, lato3) {
         super(nome);
         this.base = base;
         this.altezza = altezza;
+        this.lato3 = lato3;
     }
 
     public void stampa() {
@@ -23,6 +24,6 @@ public class Triangolo extends Forma {
     }
 
     public double perimetro() {
-        return base + altezza + Math.sqrt(Math.pow(base, 2) + Math.pow(altezza, 2));
+        return base + altezza + lato3;
     }
 }
