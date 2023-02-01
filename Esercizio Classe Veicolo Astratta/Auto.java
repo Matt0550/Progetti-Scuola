@@ -8,7 +8,7 @@ public class Auto extends Veicolo {
     }
 
     //Override the accelerate method
-    public void accelerate() {
+    public void accelera() {
         System.out.println("L'auto sta accelerando.");
     }
 }
