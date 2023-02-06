@@ -5,13 +5,12 @@ La famiglia Rossi ha a disposizione una somma di denaro da investire e vuole val
     —------------------------------------------------------------------------------------------------------------- 
     | Codice Prodotto |     Investimento                   |  %Reddito annuo  |  Rate Risk  |  Indice Rischio    | 
     —------------------------------------------------------------------------------------------------------------- 
-    | PiA             | Piano di Investimento Assicurativo | 1.5%        | 3      |               | 
+    | PiA             | Piano di Investimento Assicurativo | 1.5%             | 3           |                    | 
     -------------------------------------------------------------------------------------------------------------- 
     | BTC             | BitCoin                            | 2.80%            | 7           |                    | 
     -------------------------------------------------------------------------------------------------------------- 
     | Fiv             | Fondi di Investimento              | 1.7%             | 2           |                    | 
     -------------------------------------------------------------------------------------------------------------- 
- 
  
     Realizzare un algoritmo che permetta di: 
     1) Dare in input la somma da investire; 
@@ -36,10 +35,9 @@ class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Investimenti");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
+        frame.setSize(300, 200);
         frame.setLayout(new FlowLayout());
         frame.setLocationRelativeTo(null);
-
         JLabel label1 = new JLabel("Somma da investire");
         JTextField input1 = new JTextField(10);
         JLabel label2 = new JLabel("Indice di rischio");
@@ -58,6 +56,9 @@ class Main {
                 int rischio = Integer.parseInt(input2.getText());
                 System.out.println("Somma da investire: " + somma);
                 System.out.println("Indice di rischio: " + rischio);
+
+                Agenzia agenzia = new Agenzia(somma, rischio);
+                agenzia.calcolo(somma, rischio);
             }
         });
 
