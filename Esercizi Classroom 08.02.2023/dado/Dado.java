@@ -1,6 +1,6 @@
 package dado;
 
-public class Dado {
+public class Dado extends Astratta {
     private int faccia;
 
     public Dado() {

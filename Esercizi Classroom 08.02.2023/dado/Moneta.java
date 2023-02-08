@@ -1,6 +1,6 @@
 package dado;
 
-public class Moneta {
+public class Moneta extends Astratta {
     private int faccia;
 
     public Moneta() {
