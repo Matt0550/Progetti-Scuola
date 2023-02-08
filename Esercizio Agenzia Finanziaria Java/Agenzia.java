@@ -13,7 +13,7 @@ public class Agenzia {
         if (indiceDiRischio >= 200 && indiceDiRischio <= 600) {
             if (sommaDaInvestire >= 6000) {
                 // Distribuisco in maniera Random l’importo dato input nei tre tipi di finanziamento con un minimo di 2000€ per ogni investimento
-                int sommaPiA = (int) (Math.random() * (sommaDaInvestire - 6000) + 2000);
+                int sommaPiA = (int) (Math.random() * (sommaDaInvestire - 6000) + 2000); // 2000 - 6000 perché la somma da investire deve essere maggiore di 6000
                 int sommaBtc = (int) (Math.random() * (sommaDaInvestire - 6000) + 2000);
                 int sommaFiv = (int) (Math.random() * (sommaDaInvestire - 6000) + 2000);
 
@@ -26,9 +26,9 @@ public class Agenzia {
                 double sommaRendimenti = rendimentoPiA + rendimentoBtc + rendimentoFiv;
 
                 // Calcolo l'indice di rischio per ogni prodotto di investimento
-                double indiceRischioPiA = sommaPiA * 1.5 % sommaRendimenti;
-                double indiceRischioBtc = sommaBtc * 2.8 % sommaRendimenti;
-                double indiceRischioFiv = sommaFiv * 1.7 % sommaRendimenti;
+                double indiceRischioPiA = rendimentoPiA * 3 / 1.5;
+                double indiceRischioBtc = rendimentoBtc * 7 / 2.8;
+                double indiceRischioFiv = rendimentoFiv * 2 / 1.7;
 
                 // Calcolo la somma totale degli indici di rischio
                 double sommaIndiciRischio = indiceRischioPiA + indiceRischioBtc + indiceRischioFiv;
