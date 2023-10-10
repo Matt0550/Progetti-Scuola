@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
 <html lang="it">
-
+<!--
+    Matteo Sillitti 5C INF
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Reader</title>
+    <title>Kobo Elipsa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -19,31 +21,54 @@
 </head>
 
 <body class="bg-gray-100 m-4">
-    <nav class="bg-white shadow-sm w-full flex rounded-lg justify-between">
-        <a class="p-5 text-black font-semibold text-gray-900">
-            <i class="fa fa-book px-2 text-gray-900"></i>
-            Digital Reader</a>
+    <nav class="bg-white shadow-sm w-full flex rounded-lg justify-around">
         <div class="p-5">
-            <a class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Cosa è</a>
-            <a class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Test</a>
+            <a href="#" class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Home</a>
+            <a href="./shop.html" class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Acquista</a>
+            <a href="./images.html" class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Immagini</a>
+            <a href="./reviews.html" class="p-5 text-black font-semibold hover:font-bold hover:bg-stone-200 rounded cursor-pointer">Recensioni</a>
         </div>
     </nav>
+
     <section class="mt-10 shadow-lg flex flex-col justify-around text-center gap-3 p-20 rounded-xl custom-gradient-bg">
         <i class="fa fa-book text-3xl text-white"></i>
-        <h1 class="text-center font-bold text-3xl text-white">Digital Reader</h1>
-        <p class="font-semibold text-xl text-white">Il lettore e-book più innovativo che esista</p>
+        <h1 class="text-center font-bold text-3xl text-white">Kobo Elipsa</h1>
+        <p class="font-semibold text-xl text-white">Molto più di un eReader</p>
     </section>
 
     <section class="mt-12 shadow-lg flex flex-col content-start items-start justify-center gap-3 p-20 rounded-xl">
-        <h1 class="text-center font-bold text-3xl text-gray-900">Cos'è?</h1>
-        <p class="font-semibold text-xl text-gray-900">Grazie a Digital Reader potrai leggere i tuoi libri preferiti in modo
-            semplice e veloce, ovunque tu sia.</p>
-        <p class="text-xl text-gray-900">
+        <div class="flex flex-col content-start items-start justify-center gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Cos'è?</h1>
+            <p class="font-semibold text-xl text-gray-900">Grazie a Kobo Elipsa potrai leggere e annotare i tuoi libri preferiti in modo
+                semplice e veloce, ovunque tu sia.</p>
+            </div>
+        <img src="https://it.kobobooks.com/cdn/shop/products/Europa_Bundle_IT_700x700.jpg?v=1621262192" alt="Kobo Elipsa" class="mx-auto mt-10 rounded-xl sm:w-1/2 w-4/3">
     </section>
-    <img src="https://notebookitalia.it/images/stories/kobo_elipsa/kobo_elipsa_1.jpg" alt="Kobo Elipsa" class="w-2/4 mx-auto mt-10 rounded-xl shadow-lg">
 
+    <section class="mt-12 shadow-lg flex flex-col content-end items-end justify-center gap-3 p-20 rounded-xl">
+        <div class="flex flex-col text-end content-end items-end justify-center gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Prendi appunti</h1>
+            <p class="font-semibold text-xl text-gray-900">
+            Kobo Elipsa è molto più di un lettore. Grazie alla KoboStylus, potrai prendere appunti e annotare e-book come non hai mai fatto. Il tutto seguito da un'effetto tattile carta indimenticabile. 
+            </p>
+            </div>
+        <img src="https://it.kobobooks.com/cdn/shop/files/Capture_Endless_Ideas_1349x935.png?v=1621274368" alt="Kobo Elipsa" class="mx-auto mt-10 rounded-xl w-full">
+    </section>
+
+    <section class="mt-12 shadow-lg flex flex-col content-center items-center justify-center gap-3 p-20 rounded-xl">
+        <div class="flex flex-col text-end content-center items-center justify-between gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Ti interessa?</h1>
+            <div class="flex align-middle gap-4">
+                <a class="py-5 px-10 b-white shadow-lg rounded-xl text-gray-900 font-semibold">
+                    Acquista ora
+                </a>
+                <a class="py-5 px-10 b-white shadow-lg rounded-xl text-gray-900 font-semibold">
+                    Immagini
+                </a>
+            </div>
+        </div>
+    </section>
     
-
 </body>
 
 </html>
