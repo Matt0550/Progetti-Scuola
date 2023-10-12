@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Matteo Sillitti">
 
-    <title>Kobo Elipsa</title>
+    <title>Acquista ora | Kobo Elipsa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -27,13 +27,13 @@
             </div>
             <!-- Big -->
             <div class="sm:flex flex-row justify-between items-center gap-4 hidden">
-                <a href="./index.html" class="custom-gradient-text font-bold py-2 px-6 rounded hover:bg-gray-200">
+                <a href="./index.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                     Home
                 </a>
                 <a href="./immagini.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                     Immagini
                 </a>
-                <a href="./acquista.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                <a href="./acquista.html" class="custom-gradient-text text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                     Acquista
                 </a>
                 <a href="./recensioni.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
@@ -49,13 +49,13 @@
 
         <!-- Hamburger menu -->
         <div class="sm:hidden flex flex-col justify-between items-center gap-4 hidden mt-4" id="menu">
-            <a href="./index.html" class="custom-gradient-text font-bold py-2 px-6 rounded hover:bg-gray-200">
+            <a href="./index.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                 Home
             </a>
             <a href="./immagini.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                 Immagini
             </a>
-            <a href="./acquista.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+            <a href="./acquista.html" class="custom-gradient-text text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
                 Acquista
             </a>
             <a href="./recensioni.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
@@ -63,48 +63,59 @@
             </a>
         </div>
     </nav>
-
-    <section class="mt-10 shadow-lg flex flex-col justify-around text-center gap-3 p-20 rounded-xl custom-gradient-bg">
-        <i class="fa fa-book text-3xl text-white"></i>
-        <h1 class="text-center font-bold text-3xl text-white">Kobo Elipsa</h1>
-        <p class="font-semibold text-xl text-white">Molto più di un eReader</p>
-    </section>
-
     <section
-        class="mt-12 shadow-lg flex flex-col content-start items-start justify-center gap-3 sm:p-20 p-6 rounded-xl bg-white">
+        class="mt-12 shadow-lg flex flex-col content-start items-start justify-center gap-3 p-20 rounded-xl bg-white">
         <div class="flex flex-col content-start items-start justify-center gap-3">
-            <h1 class="text-center font-bold text-3xl text-gray-900">Cos'è?</h1>
-            <p class="font-semibold text-xl text-gray-900 w-9/12">Grazie a <span
-                    class="custom-gradient-text custom-gradient-text-hover font-semibold">Kobo Elipsa</span> potrai
-                leggere e annotare i tuoi libri preferiti in modo
-                semplice e veloce, ovunque tu sia.</p>
+            <h1 class="text-center font-bold text-3xl text-gray-900">Acquista ora</h1>
+            <p class="font-semibold text-xl text-gray-900 w-9/12">Scopri le offerte di <span
+                    class="custom-gradient-text custom-gradient-text-hover font-semibold">Kobo Elipsa</span> e
+                acquistalo subito.</p>
         </div>
-        <img src="https://it.kobobooks.com/cdn/shop/products/Europa_Bundle_IT_700x700.jpg?v=1621262192"
-            alt="Kobo Elipsa" class="mx-auto mt-10 rounded-xl w-full sm:w-9/12">
-    </section>
+        <!-- Left image and right description -->
+        <div class="flex flex-row flex-wrap justify-evenly items-center mt-10 w-full">
+            <img src="https://it.kobobooks.com/cdn/shop/products/Europa_Bundle_IT_700x700.jpg?v=1621262192"
+                alt="Kobo Elipsa" class="rounded-xl w-1/2">
+            <div class="flex flex-col justify-center items-center gap-3 w-1/2">
+                <img src="https://it.kobobooks.com/cdn/shop/files/KOBO_ELIPSA_PACK_-_LEFT_-_IT.png?v=1621273680"
+                    alt="Kobo Elipsa" class="w-30">
+                <div class="flex flex-row justify-center items-center gap-3">
+                    <p class="text-3xl font-bold text-gray-900 custom-gradient-text">€349,99</p>
+                    <p class="text-xl font-semibold text-gray-900 line-through">€399,99</p>
+                </div>
+                <p class="text-xl font-bold text-gray-900">Risparmi €50,00</p>
+                <ul>
+                    <li>
+                        <i class="fa fa-check text-green-500"></i>
+                        <span class="font-semibold text-gray-900">Kobo Elipsa</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-check text-green-500"></i>
+                        <span class="font-semibold text-gray-900">Cover Kobo Elipsa</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-check text-green-500"></i>
+                        <span class="font-semibold text-gray-900">Kobo Stylus</span>
+                    </li>
 
-    <section
-        class="mt-12 shadow-lg flex flex-col content-end items-end justify-center gap-3 sm:p-20 p-6 rounded-xl bg-white">
-        <div class="flex flex-col text-end content-end items-end justify-center gap-3">
-            <h1 class="text-center font-bold text-3xl text-gray-900">Prendi appunti</h1>
-            <p class="font-semibold text-xl text-gray-900 w-9/12">
-                Kobo Elipsa è molto più di un lettore. Grazie alla <span
-                    class="custom-gradient-text custom-gradient-text-hover font-semibold">KoboStylus</span>, potrai
-                prendere appunti e annotare e-book come non hai mai fatto. Il tutto seguito da un'effetto tattile carta
-                indimenticabile.
-            </p>
-        </div>
-        <img src="https://it.kobobooks.com/cdn/shop/files/Capture_Endless_Ideas_1349x935.png?v=1621274368"
-            alt="Kobo Elipsa" class="mx-auto mt-10 rounded-xl w-full sm:w-9/12">
-    </section>
+                </ul>
 
-    <section
-        class="mt-12 shadow-lg flex flex-col content-center items-center justify-center gap-3 sm:p-20 p-6 rounded-xl bg-white">
-        <div class="flex flex-col text-end content-center items-center justify-between gap-3">
-            <h1 class="text-center font-bold text-3xl text-gray-900">Ti interessa?</h1>
-            <div class="flex flex-wrap align-middle gap-4">
-                <a href="./acquista.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
+                <a href="https://it.kobobooks.com/products/kobo-elipsa" target="_blank"
+                    class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
                     Acquista
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section
+        class="mt-12 shadow-lg flex flex-col content-center items-center justify-center gap-3 p-20 rounded-xl bg-white">
+        <div class="flex flex-col text-end content-center items-center justify-between gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Vuoi saperne di più?</h1>
+            <div class="flex align-middle gap-4">
+                <a href="./home.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
+                    Informazioni
                 </a>
                 <a href="./recensioni.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
                     Recensioni
@@ -122,6 +133,7 @@
     </footer>
 
     <script src="./script.js"></script>
+
 </body>
 
 </html>

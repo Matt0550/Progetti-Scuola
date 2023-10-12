@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<!--
+    Matteo Sillitti 5C INF
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Matteo Sillitti">
+
+    <title>Galleria | Kobo Elipsa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="bg-gray-100 sm:mx-12 sm:my-6 mx-4 my-2">
+    <nav class=" bg-white p-4 rounded-xl">
+        <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-row justify-between items-center align-middle gap-4">
+                <p class="text-2xl font-bold text-gray-900 custom-gradient-text">Kobo Elipsa</p>
+            </div>
+            <!-- Big -->
+            <div class="sm:flex flex-row justify-between items-center gap-4 hidden">
+                <a href="./index.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                    Home
+                </a>
+                <a href="./immagini.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                    Immagini
+                </a>
+                <a href="./acquista.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                    Acquista
+                </a>
+                <a href="./recensioni.html" class="custom-gradient-text text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                    Recensioni
+                </a>
+            </div>
+            <!-- Small -->
+            <!-- Hamburger menu -->
+            <div class="sm:hidden flex flex-row justify-between items-center gap-4">
+                <i class="fa fa-bars text-2xl text-gray-900 curson-pointer" onclick="openMenu();"></i>
+            </div>
+        </div>
+
+        <!-- Hamburger menu -->
+        <div class="sm:hidden flex flex-col justify-between items-center gap-4 hidden mt-4" id="menu">
+            <a href="./index.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                Home
+            </a>
+            <a href="./immagini.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                Immagini
+            </a>
+            <a href="./acquista.html" class="text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                Acquista
+            </a>
+            <a href="./recensioni.html" class="custom-gradient-text text-gray-900 font-bold py-2 px-6 rounded hover:bg-gray-200">
+                Recensioni
+            </a>
+        </div>
+    </nav>
+
+    <section
+        class="mt-12 shadow-lg flex flex-col content-start items-start justify-center gap-3 sm:p-20 p-6 rounded-xl bg-white">
+        <div class="flex flex-col content-start items-start justify-center gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Cosa dicono di noi?</h1>
+            <p class="font-semibold text-xl text-gray-900 w-9/12">Scopri le recensioni di <span
+                    class="custom-gradient-text custom-gradient-text-hover font-semibold">Kobo Elipsa</span> e scopri
+                tutte le sue funzionalità nascoste.</p>
+
+        </div>
+        <!-- Reviews -->
+        <div class="flex flex-wrap gap-3">
+            <div
+                class="flex flex-col flex-wrap justify-center items-center gap-4 mt-10 bg-gray-100 p-4 rounded-xl max-w-md	">
+                <div class="flex flex-row justify-between items-center gap-4">
+                    <p class="text-lg font-bold text-gray-900 custom-gradient-text">Luca</p>
+                    <p class="text-smmd font-semibold text-gray-900">2 giorni fa</p>
+                </div>
+                <div class="stars">
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                </div>
+                <p class="text-md  text-gray-900 text-justify">Ottimo prodotto, lo consiglio a tutti. Sono rimasto
+                    stupito dalla qualità del display e dalla durata della batteria. Non mi aspettavo un prodotto così
+                    valido.</p>
+                </p>
+            </div>
+            <div
+                class="flex flex-col flex-wrap justify-center items-center gap-4 mt-10 bg-gray-100 p-4 rounded-xl max-w-md	">
+                <div class="flex flex-row justify-between items-center gap-4">
+                    <p class="text-lg font-bold text-gray-900 custom-gradient-text">Maria</p>
+                    <p class="text-smmd font-semibold text-gray-900">1 settimana fa</p>
+                </div>
+                <div class="stars">
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p class="text-md text-gray-900 text-justify">Sono rimasta soddisfattissima! Posso sottolineare,
+                    mettere commenti, evidenziare e cancellare se non sono soddisfatta! Scrivo ricette, annotazioni piccoli schemi e disegni e leggo i miei libri preferiti.
+                </p>
+            </div>
+            <div
+                class="flex flex-col flex-wrap justify-center items-center gap-4 mt-10 bg-gray-100 p-4 rounded-xl max-w-md	">
+                <div class="flex flex-row justify-between items-center gap-4">
+                    <p class="text-lg font-bold text-gray-900 custom-gradient-text">Antonio</p>
+                    <p class="text-smmd font-semibold text-gray-900">1 settimana fa</p>
+                </div>
+                <div class="stars">
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p class="text-md text-gray-900 text-justify">Elipsa è veramente un ottimo tablet/eReader e il prezzo è
+                    competitivo considerate tutte le caratteristiche e gli accessori inclusi. Sarebbe ancora meglio se
+                    si potesse comprare il tablet senza il resto degli accessori, per chi non ha bisogno di prendere
+                    appunti o non vuole usare la cover
+
+                </p>
+            </div>
+            <div
+                class="flex flex-col flex-wrap justify-center items-center gap-4 mt-10 bg-gray-100 p-4 rounded-xl max-w-md	">
+                <div class="flex flex-row justify-between items-center gap-4">
+                    <p class="text-lg font-bold text-gray-900 custom-gradient-text">Mario</p>
+                    <p class="text-smmd font-semibold text-gray-900">2 settimana fa</p>
+                </div>
+                <div class="stars">
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star selected"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p class="text-md text-gray-900 text-justify">
+                    Il prodotto è molto bello e valido, ma sicuramente migliorabile: ad esempio manca la possibilità di organizzare gli appunti in cartelle. Purtroppo ho dovuto restituirlo perché non totalmente utile al mio lavoro.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section
+        class="mt-12 shadow-lg flex flex-col content-center items-center justify-center gap-3 sm:p-20 p-6 rounded-xl bg-white">
+        <div class="flex flex-col text-end content-center items-center justify-between gap-3">
+            <h1 class="text-center font-bold text-3xl text-gray-900">Ti interessa?</h1>
+            <div class="flex flex-wrap align-middle gap-4">
+                <a href="./acquista.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
+                    Acquista
+                </a>
+                <a href="./recensioni.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
+                    Recensioni
+                </a>
+                <a href="./index.html" class="font-bold py-2 px-6 rounded custom-gradient-bg text-white">
+                    Maggiori informazioni
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-12 flex flex-col justify-center items-center gap-4 bg-white py-4 rounded-xl shadow-lg">
+        <a href="https://r.matt05.it/bio" target="_blank"
+            class="font-semibold text-lg custom-gradient-text custom-gradient-text-hover">Matteo Sillitti 5C INF</a>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

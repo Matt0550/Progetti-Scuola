@@ -1,0 +1,40 @@
+.custom-gradient-bg {
+    background: linear-gradient(45deg, #845EC2, #2C73D2, #0081CF, #0089BA, #008E9B, #008F7A);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-gradient-text {
+    background: linear-gradient(45deg, #845EC2, #2C73D2, #0081CF, #0089BA, #008E9B, #008F7A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-gradient-text-hover:hover {
+    font-size: 1.2em;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.images-list img:hover {
+    transform: scale(1.5);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    margin: 30px;
+
+}
+
+.images-list img {
+    transition: all 0.2s ease-in-out;
+}
+
+.stars .selected {
+    color: #FFD700;
+}
+
+.stars .fa-star:not(.selected) {
+    color: rgb(83, 83, 83);
+}
