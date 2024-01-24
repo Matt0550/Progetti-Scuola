@@ -23,7 +23,7 @@ public class Runner implements Runnable {
 
             String message;
             while ((message = inDalClient.readLine()) != null) {
-                System.out.println(ConsoleColors.YELLOW + "[CLIENT] " + ConsoleColors.RESET + ConsoleColors.BLUE
+                System.out.println(ConsoleColors.YELLOW + "[CLIENT]" + client.getInetAddress() + ":" + client.getLocalPort() + " " + ConsoleColors.RESET + ConsoleColors.BLUE
                         + LocalDateTime.now() + ConsoleColors.RESET + ConsoleColors.YELLOW + " - " + ConsoleColors.GREEN
                         + message + ConsoleColors.RESET);
 
