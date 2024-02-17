@@ -5,8 +5,16 @@ $dati = [
         "marca" => "Fiat",
         "modello" => "Panda",
         "prezzo" => 15000,
-        "specifiche" => [
-            "motore" => "100kw"
+        "motoriDisponibili" =>
+        [
+            [
+                "nome" => "Benzina",
+                "prezzo" => 0,
+            ],
+            [
+                "nome" => "Diesel",
+                "prezzo" => 1500,
+            ]
         ],
         "optionalDisponibili" => [
             [
@@ -26,8 +34,12 @@ $dati = [
         "marca" => "Audi",
         "modello" => "Q3",
         "prezzo" => 44000,
-        "specifiche" => [
-            "motore" => "200kw"
+        "motoriDisponibili" =>
+        [
+            [
+                "nome" => "Benzina",
+                "prezzo" => 0,
+            ]
         ],
         "optionalDisponibili" => [
             [
@@ -59,13 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cognome = $_POST["cognome"];
     $modelloAuto = $_POST["modelloAuto"];
     $annotazioni = $_POST["annotazioni"];
+    $tipoMotoreNome = isset($_POST["tipoMotore"]) ? $_POST["tipoMotore"] : [];
     $optionalSelezionati = isset($_POST["optionalSelezionati"]) ? $_POST["optionalSelezionati"] : [];
 
-    // Retrieve the available options for the selected car
+    // Ricevo le opzioni disponibili quando l'utente seleziona un modello di auto specifico
     $autoIndex = array_search($modelloAuto, array_column($dati, 'id'));
     $optionalLista = $dati[$autoIndex]["optionalDisponibili"];
+    $tipoMotoreLista = $dati[$autoIndex]["motoriDisponibili"];
     
-    // Calculate the total cost
+    $tipoMotoreIndex = array_search($tipoMotoreNome, array_column($tipoMotoreLista, "nome"));
+
+    $costoMotore = $tipoMotoreLista[$tipoMotoreIndex]["prezzo"];
+    // Calcolo il costo totale dell'auto
     $costoBase = $dati[$autoIndex]["prezzo"];
     $costoOpzionali = 0;
     foreach ($optionalLista as $optional) {
@@ -73,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $costoOpzionali += $optional['prezzo'];
         }
     }
-    $costoTotale = $costoBase + $costoOpzionali;
+    $costoTotale = $costoBase + $costoOpzionali + $costoMotore;
 
 }
 
@@ -100,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h1 class="text-5xl font-bold mb-4">Terza esercitazione</h1>
             </div>
             <div class="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
-                <form class="card-body" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form class="card-body" action="/proxy/80<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Nome</span>
@@ -130,6 +147,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     echo '<option ' . ($isSelected ? "selected" : "") . ' value="' . $auto["id"] . '">' . $auto["modello"] . '</option>';
                                     echo '</optgroup>';
                                 }
+                                
+                            ?>
+                        </select>
+
+                    </div>
+
+                    <div class="form-control">
+                        <div class="label">
+                            <span class="label-text">Tipo di motore</span>
+                        </div>
+                        <select class="select select-bordered" name="tipoMotore" onchange="this.form.submit()">
+                            <option disabled selected>Seleziona</option>
+                            <?php
+                            foreach ($tipoMotoreLista as $motore) {
+                                    $isSelected = isset($motore["nome"]) && $motore["nome"] == $tipoMotoreNome;
+
+                                    // print_r($auto);
+                                    // echo $auto["marca"];
+                                    echo '<option ' . ($isSelected ? "selected" : "") . ' value="' . $motore["nome"] . '">' . $motore["nome"] . " +" . $motore["prezzo"] . '€</option>';
+                                
+                            }
                                 
                             ?>
                         </select>
