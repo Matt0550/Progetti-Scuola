@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($data) && isset($data)) echo "Devi inserire una data!<br>";
 
 
-    if ($voto < 0 || $voto > 10) echo "Il voto non può essere inferiore a 0 e superiore a 10<br>"; die();
+    if ($voto < 0 || $voto > 10) echo "Il voto non può essere inferiore a 0 e superiore a 10<br>";
 
     echo "In data <b>$data</b> hai preso <b>$voto</b> di <b>$materia</b>";
 
