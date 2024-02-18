@@ -1,5 +1,10 @@
+<?php
+    // Lista delle cartelle che finiscono con esercitazione
+    $cartelle_esercitazione = array_filter(glob('*Esercitazione'), 'is_dir');
+?>
+
 <!DOCTYPE html>
-<html lang="en" data-theme="night">
+<html lang="it" data-theme="night">
 
 <head>
     <meta charset="UTF-8">
@@ -46,72 +51,20 @@
                         gli esercizi di laboratorio di TPSIT.</p>
                     <div class="h-10"></div>
                     <div class="flex flex-wrap gap-4 justify-center">
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
+                        <?php foreach ($cartelle_esercitazione as $cartella): ?>
+                            <div class="card w-96 bg-base-300 shadow-xl">
+                                <div class="card-body">
+                                    <h2 class="card-title"><?php echo $cartella; ?>
+                                    </h2>
+                                    <div class="card-actions justify-end">
+                                        <a href="<?php echo $cartella; ?>" class="btn btn-primary">Apri</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-300 shadow-xl">
-                            <div class="card-body">
-                                <h2 class="card-title">Esercizio 1<div class="badge badge-secondary">NEW</div>
-                                </h2>
-                                <p>Semplice form. 18/01/2024</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary">Apri</button>
-                                </div>
-                            </div>
-                        </div>
-
+                        <?php endforeach; ?>
                     </div>
-
                 </div>
             </div>
-       
         </div>
     </div>
 </body>
