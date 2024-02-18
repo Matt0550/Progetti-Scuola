@@ -66,6 +66,14 @@ $dati = [
     ],
 ];
 
+$nome = "";
+$cognome = "";
+$modelloAuto = "";
+$annotazioni = "";
+$tipoMotoreNome = [];
+$optionalSelezionati = [];
+$salvaPreventivo = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Variabili
     $nome = $_POST["nome"];
@@ -121,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
             <?php if(!$salvaPreventivo): ?>
 
-                <form class="card-body" action="/proxy/80<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form class="card-body" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Nome</span>
@@ -242,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <br>
                         <span class="font-normal">
                             <?php
-                            if (is_null($optionalSelezionati)) echo 'nessuno';
+                            if ($optionalSelezionati == []) echo 'nessuno';
                             foreach ($optionalLista as $optional) {
                                 if (in_array($optional['nome'], $optionalSelezionati)) {
                                     echo $optional["nome"] . ' - <span class="font-bold">'. $optional["prezzo"] . '€</span><br>'; 
@@ -256,14 +264,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <br>
                         <span class="font-normal">
                             <?php 
-                                if (is_null($annotazioni)) echo 'nessuno';
+                                if ($annotazioni == "") echo 'nessuno';
 
                                 echo $annotazioni;
                             ?>
                         </span>
                     </p>
                     <p class="text-center my-2 text-xl">Costo totale: <b><?php echo $costoTotale ?>€</b></p>
-
+                    <a class="text-center text-red-800" href="index.php">Nuovo preventivo</a>
                 </div>
                 <?php endif; ?>
             </div>
