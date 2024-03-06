@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <?php else: ?>
 
-                <form class="card-body" action="/proxy/80<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form class="card-body" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="flex flex-row justify-center items-center gap-2 text-center">
                         <input name="numeri[]" type="number" value="" class="w-1/2 input input-bordered" required min="1" max="90" />
                         <input name="numeri[]" type="number" value="" class="w-1/2 input input-bordered" required min="1" max="90" />
