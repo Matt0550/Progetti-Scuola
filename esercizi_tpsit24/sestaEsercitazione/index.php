@@ -19,9 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["elimina"])) {
         $id = $_POST["id"];
 
+        if (empty($id)) {
+            exit("Dati mancanti!");
+        }
+
         $queryDelete = $conn->prepare("DELETE FROM utenti WHERE id = ?");
         $queryDelete->bind_param("i", $id);
         $queryDelete->execute();
+
+
 
         header("Location: .");
 
@@ -30,6 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nome = $_POST["nome"];
         $cognome = $_POST["cognome"];
         $username = $_POST["username"];
+
+        if (empty($nome) || empty($cognome) || empty($username || $id)) {
+            exit("Dati mancanti!");
+        }
 
         $queryUpdate = $conn->prepare("UPDATE utenti SET nome = ?, cognome = ?, username = ? WHERE id = ?");
         $queryUpdate->bind_param("sssi", $nome, $cognome, $username, $id);
@@ -42,6 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nome = $_POST["nome"];
         $cognome = $_POST["cognome"];
         $username = $_POST["username"];
+
+        if (empty($nome) || empty($cognome) || empty($username)) {
+            exit("Dati mancanti!");
+        }
 
         echo <<<HTML
             <dialog class="modal" id="modifica_modal">
@@ -100,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryInsert->bind_param("sss", $nome, $cognome, $username);
         $queryInsert->execute();
 
-        header("Location: .");
+        //header("Location: .");
 
     }
 
