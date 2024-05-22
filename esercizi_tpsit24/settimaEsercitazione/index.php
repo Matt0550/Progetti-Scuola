@@ -138,7 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryArtistiCanzoni->execute();
         $datiArtistiCanzoni = $queryArtistiCanzoni->get_result();
 
-
     } else if (isset($_POST["eliminaArtista"])) {
         $id = $_POST["id"];
 
@@ -256,7 +255,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryCanzoni->execute();
         $datiCanzoni = $queryCanzoni->get_result();
 
-    } else {
+    } else if (isset($_POST["eliminaCanzone"])) {
+        $id = $_POST["id"];
+
+        if (empty($id)) {
+            exit("ERRORE: eliminaCanzone: Dati mancanti!");
+        }
+
+        $queryDelete = $conn->prepare("DELETE FROM artisti_canzoni WHERE idCanzone = ?");
+        $queryDelete->bind_param("i", $id);
+        $queryDelete->execute();
+
+        $queryDeleteCanzone = $conn->prepare("DELETE FROM canzoni WHERE id = ?");
+        $queryDeleteCanzone->bind_param("i", $id);
+        $queryDeleteCanzone->execute();
+        
+
+        header("Location: .");
+
+    } else if (isset($_POST["aggiungiCanzone"])) {
+        $nome = $_POST["nome"];
+        $durata = $_POST["durata"];
+        $artistaId = $_POST["artistaId"];
+        $casaDiscograficaId = $_POST["casaDiscograficaId"];
+
+        if (empty($nome) || empty($durata) || empty($artistaId) || empty($casaDiscograficaId)) {
+            exit("ERRORE: aggiungiCanzone: Dati mancanti!");
+        }
+
+        $queryInsert = $conn->prepare("INSERT INTO canzoni (nome, durataMinuti, casaDiscograficaId) VALUES (?, ?, ?)");
+        $queryInsert->bind_param("sis", $nome, $durata, $casaDiscograficaId);
+        $queryInsert->execute();
+
+        $idCanzone = $conn->insert_id;
+
+        $queryInsertArtistaCanzone = $conn->prepare("INSERT INTO artisti_canzoni (idArtista, idCanzone) VALUES (?, ?)");
+        $queryInsertArtistaCanzone->bind_param("ii", $artistaId, $idCanzone);
+        $queryInsertArtistaCanzone->execute();
+
+        header("Location: .");
+
+    } 
+    
+    else {
         exit("Azione non valida!");
 
     }
@@ -364,6 +405,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h3 class="font-bold text-lg">Aggiungi canzone</h3>
                 <form class="flex flex-col gap-y-2 py-4" action="." method="post">
                     <input type="hidden" name="aggiungiCanzone" />
+                    <input type="hidden" name="casaDiscograficaId" value="<?php echo $casadiscograficaId; ?>" />
                     <label class="input input-bordered flex items-center gap-2">
                         <input type="text" name="nome" class="grow" required placeholder="Nome canzone" />
                     </label>
@@ -472,7 +514,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                 </div>
-            <?php elseif (isset($datiArtisti) && isset($datiArtistiCanzoni)): ?>
+            <?php elseif (isset($datiArtisti) || isset($datiArtistiCanzoni)): ?>
                 <div class="text-sm breadcrumbs">
                     <ul>
                         <li><a href=".">Case discografiche</a></li>
@@ -496,20 +538,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th>Cognome</th>
                                         <th>Nome d'arte</th>
                                         <th>Biografia</th>
-                                        <th>Casa discografica</th>
+                                        <th>Inserito il</th>
                                         <th>Azioni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    if (mysqli_num_rows($datiArtisti) > 0) {
-                                        while ($riga = mysqli_fetch_assoc($datiArtisti)) {
+                                    if (isset($datiArtisti) && $datiArtisti->num_rows > 0) {
+                                        while ($riga = $datiArtisti->fetch_assoc()) {
+                                            var_dump($riga);
                                             $id = $riga["id"];
                                             $nome = $riga["nome"];
                                             $cognome = $riga["cognome"];
                                             $nomeArte = $riga["nomeArte"];
                                             $biografia = $riga["biografia"];
-                                            $casaDiscograficaId = $riga["casaDiscograficaId"];
+                                            $dataInserimento = $riga["dataInserimento"];
+                                            $casadiscograficaId = $riga["casaDiscograficaId"];
 
                                             echo <<<HTML
                                                 <tr class="hover">
@@ -518,6 +562,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td>$cognome</td>
                                                     <td>$nomeArte</td>
                                                     <td>$biografia</td>
+                                                    <td>$dataInserimento</td>
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
@@ -529,6 +574,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                             <input type="hidden" name="cognome" value="$cognome"/>
                                                             <input type="hidden" name="nomeArte" value="$nomeArte"/>
                                                             <input type="hidden" name="biografia" value="$biografia"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$casadiscograficaId"/>
                                                             <button class="btn btn-primary btn-sm" name="modificaArtista">Modifica</button>
                                                         </form>
                                                         <form action="." method="post">
@@ -570,8 +616,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    if (mysqli_num_rows($datiArtistiCanzoni) > 0) {
-                                        while ($riga = mysqli_fetch_assoc($datiArtistiCanzoni)) {
+                                    if (isset($datiArtistiCanzoni) && $datiArtistiCanzoni->num_rows > 0) {
+                                        while ($riga = $datiArtistiCanzoni->fetch_assoc()) {
                                             $id = $riga["id"];
                                             $idArtista = $riga["idArtista"];
                                             $idCanzone = $riga["idCanzone"];
