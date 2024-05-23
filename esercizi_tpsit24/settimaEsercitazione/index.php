@@ -31,26 +31,54 @@ if (!$datiCaseDiscografiche)
     die("Errore database!");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "<script>console.log('POST: " . json_encode($_POST) . "');</script>";
+    if (isset($_POST["casaDiscograficaId"])) {
+        $casaDiscograficaId = $_POST["casaDiscograficaId"];
+
+        $queryCaseDiscografica = $conn->prepare("SELECT * FROM caseDiscografiche WHERE id = ? LIMIT 1");
+        $queryCaseDiscografica->bind_param("i", $casaDiscograficaId);
+        $queryCaseDiscografica->execute();
+        $datiCaseDiscografica = $queryCaseDiscografica->get_result();
+        $casaDiscografica = mysqli_fetch_assoc($datiCaseDiscografica);
+
+    }
+    
     if (isset($_POST["eliminaCasaDiscografica"])) {
-        $id = $_POST["id"];
+        $id = $_POST["casaDiscograficaId"];
 
         if (empty($id)) {
             exit("ERRORE: eliminaCasaDiscografica: Dati mancanti!");
         }
 
+        // Delete all artisti_canzoni
+        $queryDeleteArtistiCanzoni = $conn->prepare("DELETE FROM artisti_canzoni WHERE idArtista IN (SELECT id FROM artisti WHERE casaDiscograficaId = ?)");
+        $queryDeleteArtistiCanzoni->bind_param("i", $id);
+        $queryDeleteArtistiCanzoni->execute();
+        
+        // Delete all artisti
+        $queryDeleteArtisti = $conn->prepare("DELETE FROM artisti WHERE casaDiscograficaId = ?");
+        $queryDeleteArtisti->bind_param("i", $id);
+        $queryDeleteArtisti->execute();
+
+        // Delete all canzoni
+        $queryDeleteCanzoni = $conn->prepare("DELETE FROM canzoni WHERE casaDiscograficaId = ? ");
+        $queryDeleteCanzoni->bind_param("i", $id);
+        $queryDeleteCanzoni->execute();
+
         $queryDelete = $conn->prepare("DELETE FROM caseDiscografiche WHERE id = ?");
         $queryDelete->bind_param("i", $id);
         $queryDelete->execute();
 
+
         header("Location: .");
 
     } else if (isset($_POST["editModalCasaDiscografica"])) {
-        $id = $_POST["id"];
+        $id = $_POST["casaDiscograficaId"];
         $nome = $_POST["nome"];
         $website = $_POST["website"];
         $dataFondazione = $_POST["dataFondazione"];
 
-        if (empty($nome) || empty($website) || empty($dataFondazione || $id)) {
+        if (empty($nome) || empty($website) || empty($dataFondazione || empty($id))) {
             exit("ERRORE: editModalCasaDiscografica: Dati mancanti!");
         }
 
@@ -63,32 +91,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (isset($_POST["modificaCasaDiscografica"])) {
         // Questo codice viene eseguito quando si preme il pulsante "Modifica" nella tabella ed apre il dialog
 
-        $id = $_POST["id"];
-        $nome = $_POST["nome"];
-        $website = $_POST["website"];
-        $dataFondazione = $_POST["dataFondazione"];
+        $id = $_POST["casaDiscograficaId"];
 
-
-        if (empty($nome) || empty($website) || empty($dataFondazione)) {
+        if (empty($id)) {
             exit("ERRORE: modificaCasaDiscografica: Dati mancanti!");
         }
-
+    
         echo <<<HTML
             <dialog class="modal" id="modificaCasaModal">
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">Modifica riga $id</h3>
                     <form class="flex flex-col gap-y-2 py-4" action="." method="post">
                         <input type="hidden" name="editModalCasaDiscografica"/>
-                        <input type="hidden" name="id" value="$id"/>
+                        <input type="hidden" name="casaDiscograficaId" value="$id"/>
 
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="text" name="nome" class="grow" required placeholder="Nome" value="$nome" />
+                            <input type="text" name="nome" class="grow" required placeholder="Nome" value="{$casaDiscografica['nome']}" />
                         </label>
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="url" name="website" class="grow" required placeholder="Website" value="$website" />
+                            <input type="url" name="website" class="grow" required placeholder="Website" value="{$casaDiscografica['website']}" />
                         </label>
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="date" name="dataFondazione" class="grow" required placeholder="Data Fondazione" value="$dataFondazione" />
+                            <input type="date" name="dataFondazione" class="grow" required placeholder="Data Fondazione" value="{$casaDiscografica['dataFondazione']}" />
                         </label>
                         <button class="btn btn-primary" type="submit">Modifica</button>
                         <a href="." class="link link-error text-center">Annulla</a>
@@ -119,22 +143,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: .");
 
     } else if (isset($_POST["apriCasaDiscografica"])) {
-        $casadiscograficaId = $_POST["id"];
-        $nomeCasaDiscografica = $_POST["nome"];
+        $casaDiscograficaId = $_POST["casaDiscograficaId"];
 
-        if (empty($casadiscograficaId) || empty($nomeCasaDiscografica)) {
+        if (empty($casaDiscograficaId)) {
             exit("ERRORE: apriCasaDiscografica: Dati mancanti!");
         }
 
         $queryArtista = $conn->prepare("SELECT * FROM artisti WHERE casaDiscograficaId = ?");
-        $queryArtista->bind_param("i", $casadiscograficaId);
+        $queryArtista->bind_param("i", $casaDiscograficaId);
         $queryArtista->execute();
         $datiArtisti = $queryArtista->get_result();
 
 
         // Artisti_canzoni è una tabella di relazione tra artisti e canzoni poichè un artista può avere più canzoni e una canzone può avere più artisti using datiArtisti
         $queryArtistiCanzoni = $conn->prepare("SELECT * FROM artisti_canzoni WHERE idArtista IN (SELECT id FROM artisti WHERE casaDiscograficaId = ?)");
-        $queryArtistiCanzoni->bind_param("i", $casadiscograficaId);
+        $queryArtistiCanzoni->bind_param("i", $casaDiscograficaId);
         $queryArtistiCanzoni->execute();
         $datiArtistiCanzoni = $queryArtistiCanzoni->get_result();
 
@@ -177,15 +200,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else if (isset($_POST["modificaArtista"])) {
         $id = $_POST["id"];
-        $nome = $_POST["nome"];
-        $cognome = $_POST["cognome"];
-        $nomeArte = $_POST["nomeArte"];
-        $biografia = $_POST["biografia"];
-        $casaDiscograficaId = $_POST["casaDiscograficaId"];
-
-        if (empty($nome) || empty($cognome) || empty($nomeArte) || empty($biografia) || empty($casaDiscograficaId)) {
+        
+        if (empty($id)) {
             exit("ERRORE: modificaArtista: Dati mancanti!");
         }
+
+        $queryArtista = $conn->prepare("SELECT * FROM artisti WHERE id = ?");
+        $queryArtista->bind_param("i", $id);
+        $queryArtista->execute();
+        $datiArtista = $queryArtista->get_result();
+        $artista = mysqli_fetch_assoc($datiArtista);
+
+        // All casa discografiche
+        $queryCaseDiscografiche = $conn->prepare("SELECT * FROM caseDiscografiche");
+        $queryCaseDiscografiche->execute();
+        $datiCaseDiscografiche = $queryCaseDiscografiche->get_result();
+
 
         echo <<<HTML
             <dialog class="modal" id="modificaArtistaModal">
@@ -196,21 +226,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="hidden" name="id" value="$id"/>
 
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="text" name="nome" class="grow" required placeholder="Nome" value="$nome" />
+                            <input type="text" name="nome" class="grow" required placeholder="Nome" value="{$artista['nome']}" />
                         </label>
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="text" name="cognome" class="grow" required placeholder="Cognome" value="$cognome" />
+                            <input type="text" name="cognome" class="grow" required placeholder="Cognome" value="{$artista['cognome']}" />
                         </label>
                         <label class="input input-bordered flex items-center gap-2">
-                            <input type="text" name="nomeArte" class="grow" required placeholder="Nome d'arte" value="$nomeArte" />
+                            <input type="text" name="nomeArte" class="grow" required placeholder="Nome d'arte" value="{$artista['nomeArte']}" />
                         </label>
                         <label class="textarea textarea-bordered flex items-center gap-2">
-                            <textarea name="biografia" class="grow" required placeholder="Biografia">$biografia</textarea>
+                            <textarea name="biografia" class="grow" required placeholder="Biografia">{$artista['biografia']}</textarea>
                         </label>
                         <label class="input input-bordered flex items-center gap-2">
                             <select name="casaDiscograficaId" class="grow" required>
                                 <option value="" disabled>Seleziona una casa discografica</option>
-                                <option value="$casaDiscograficaId" selected>$casaDiscograficaId</option>
+            HTML;
+                                if (mysqli_num_rows($datiCaseDiscografiche) > 0) {
+                                    while ($riga = mysqli_fetch_assoc($datiCaseDiscografiche)) {
+                                        $id = $riga["id"];
+                                        $nome = $riga["nome"];
+                                        echo "<option value='$id'>$nome</option>";
+                                    }
+                                }
+                                echo <<<HTML
                             </select>
                         </label>
                         <button class="btn btn-primary" type="submit">Modifica</button>
@@ -246,21 +284,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else if (isset($_POST["apriArtista"])) {
         $artistaId = $_POST["id"];
-        $casaDiscograficaId = $_POST["casaDiscograficaId"];
-        $nomeCasaDiscografica = $_POST["casaDiscograficaNome"];
-        $nome = $_POST["nome"];
-        $cognome = $_POST["cognome"];
-        $nomeArte = $_POST["nomeArte"];
-        $biografia = $_POST["biografia"];
 
         if (empty($artistaId)) {
             exit("ERRORE: apriArtista: Dati mancanti!");
         }
 
+        $queryArtista = $conn->prepare("SELECT * FROM artisti WHERE id = ? LIMIT 1");
+        $queryArtista->bind_param("i", $artistaId);
+        $queryArtista->execute();
+        $datiArtista = $queryArtista->get_result();
+        $artista = mysqli_fetch_assoc($datiArtista);        
+
         $queryCanzoni = $conn->prepare("SELECT * FROM canzoni WHERE id IN (SELECT idCanzone FROM artisti_canzoni WHERE idArtista = ?)");
         $queryCanzoni->bind_param("i", $artistaId);
         $queryCanzoni->execute();
         $datiCanzoniPerArtista = $queryCanzoni->get_result();
+
+
+
 
     } else if (isset($_POST["eliminaCanzone"])) {
         $id = $_POST["id"];
@@ -301,11 +342,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryInsertArtistaCanzone->execute();
 
         header("Location: .");
+    } else if (isset($_POST["modificaCanzone"])) {
+        $id = $_POST["id"];
+
+        if (empty($id)) {
+            exit("ERRORE: modificaCanzone: Dati mancanti!");
+        }
+
+        $queryCanzone = $conn->prepare("SELECT * FROM artisti_canzoni WHERE idCanzone = ?");
+        $queryCanzone->bind_param("i", $id);
+        $queryCanzone->execute();
+        $datiCanzone = $queryCanzone->get_result();
+        $canzone = mysqli_fetch_assoc($datiCanzone);
+
+        $queryArtista = $conn->prepare("SELECT * FROM artisti WHERE id = ?");
+        $queryArtista->bind_param("i", $canzone["idArtista"]);
+        $queryArtista->execute();
+        $datiArtista = $queryArtista->get_result();
+        $artista = mysqli_fetch_assoc($datiArtista);
+
+        $queryCanzone = $conn->prepare("SELECT * FROM canzoni WHERE id = ?");
+        $queryCanzone->bind_param("i", $canzone["idCanzone"]);
+        $queryCanzone->execute();
+        $datiCanzone = $queryCanzone->get_result();
+        $canzone = mysqli_fetch_assoc($datiCanzone);
+
+        echo <<<HTML
+            <dialog class="modal" id="modificaCanzoneModal">
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">Modifica riga $id</h3>
+                    <form class="flex flex-col gap-y-2 py-4" action="." method="post">
+                        <input type="hidden" name="editModalCanzone"/>
+                        <input type="hidden" name="id" value="$id"/>
+                        <input type="hidden" name="casaDiscograficaId" value="{$canzone['casaDiscograficaId']}"/>
+
+                        <label class="input input-bordered flex items-center gap-2">
+                            <input type="text" name="nome" class="grow" required placeholder="Nome" value="{$canzone['nome']}" />
+                        </label>
+                        <label class="input input-bordered flex items-center gap-2">
+                            <input type="number" name="durata" class="grow" required placeholder="Durata" value="{$canzone['durataMinuti']}" />
+                        </label>
+                        <label class="input input-bordered flex items-center gap-2">
+                            <select name="artistaId" class="grow" required>
+                                <option value="" disabled>Seleziona un artista</option>
+                                <option value="{$artista['id']}" selected>{$artista["nome"]} {$artista["cognome"]}</option>
+                            </select>
+                        </label>
+                        <button class="btn btn-primary" type="submit">Modifica</button>
+                        <a href="." class="link link-error text-center">Annulla</a>
+                    </form>
+                </div>
+            </dialog>
+            <script>
+                // On document ready
+                document.addEventListener("DOMContentLoaded", function () {
+                    modificaCanzoneModal.showModal();
+                });
+            </script>
+        HTML;
+
+
+    } else if (isset($_POST["editModalCanzone"])) {
+        $id = $_POST["id"];
+        $nome = $_POST["nome"];
+        $durata = $_POST["durata"];
+        $artistaId = $_POST["artistaId"];
+
+        if (empty($nome) || empty($durata) || empty($artistaId)) {
+            exit("ERRORE: editModalCanzone: Dati mancanti!");
+        }
+
+        $queryUpdate = $conn->prepare("UPDATE canzoni SET nome = ?, durataMinuti = ? WHERE id = ?");
+        $queryUpdate->bind_param("ssi", $nome, $durata, $id);
+        $queryUpdate->execute();
+
+        $queryUpdateArtistaCanzone = $conn->prepare("UPDATE artisti_canzoni SET idArtista = ? WHERE idCanzone = ?");
+        $queryUpdateArtistaCanzone->bind_param("ii", $artistaId, $id);
+        $queryUpdateArtistaCanzone->execute();
+
+        header("Location: .");
     } else {
         exit("Azione non valida!");
-
     }
-
 }
 ?>
 
@@ -409,7 +527,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h3 class="font-bold text-lg">Aggiungi canzone</h3>
                 <form class="flex flex-col gap-y-2 py-4" action="." method="post">
                     <input type="hidden" name="aggiungiCanzone" />
-                    <input type="hidden" name="casaDiscograficaId" value="<?php echo $casadiscograficaId; ?>" />
+                    <input type="hidden" name="casaDiscograficaId" value="<?php echo $casaDiscograficaId; ?>" />
                     <label class="input input-bordered flex items-center gap-2">
                         <input type="text" name="nome" class="grow" required placeholder="Nome canzone" />
                     </label>
@@ -485,20 +603,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td>$dataFondazione</td>
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
-                                                            <input type="hidden" name="id" value="$id"/>
-                                                            <input type="hidden" name="nome" value="$nome"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$id"/>
                                                             <button class="btn btn-accent btn-sm" name="apriCasaDiscografica">Apri</button>
                                                         </form>
 
                                                         <form action="." method="post">
-                                                            <input type="hidden" name="id" value="$id"/>
-                                                            <input type="hidden" name="nome" value="$nome"/>
-                                                            <input type="hidden" name="website" value="$website"/>
-                                                            <input type="hidden" name="dataFondazione" value="$dataFondazione"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$id"/>
                                                             <button class="btn btn-primary btn-sm" name="modificaCasaDiscografica">Modifica</button>
                                                         </form>
                                                         <form action="." method="post">
-                                                            <input type="hidden" name="id" value="$id"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$id"/>
                                                             <button class="btn btn-error btn-sm" name="eliminaCasaDiscografica">Elimina</button>
                                                         </form>
                                                     </td>
@@ -519,7 +633,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="text-sm breadcrumbs">
                     <ul>
                         <li><a href=".">Case discografiche</a></li>
-                        <li><?php echo "<b>" . $nomeCasaDiscografica . "</b>"; ?></li>
+                        <li><?php echo "<b>" . $casaDiscografica["nome"] . "</b>"; ?></li>
                     </ul>
                 </div>
                 <div class="card shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
@@ -554,7 +668,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $nomeArte = $riga["nomeArte"];
                                             $biografia = $riga["biografia"];
                                             $dataInserimento = $riga["dataInserimento"];
-                                            $casadiscograficaId = $riga["casaDiscograficaId"];
+                                            $casaDiscograficaId = $riga["casaDiscograficaId"];
 
                                             echo <<<HTML
                                                 <tr class="hover">
@@ -567,21 +681,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
-                                                            <input type="hidden" name="casaDiscograficaId" value="$casadiscograficaId"/>
-                                                            <input type="hidden" name="casaDiscograficaNome" value="$nomeCasaDiscografica"/>
-                                                            <input type="hidden" name="nome" value="$nome"/>
-                                                            <input type="hidden" name="cognome" value="$cognome"/>
-                                                            <input type="hidden" name="nomeArte" value="$nomeArte"/>
-                                                            <input type="hidden" name="biografia" value="$biografia"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$casaDiscograficaId"/>
+
                                                             <button class="btn btn-accent btn-sm" name="apriArtista">Apri</button>
                                                         </form>
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
-                                                            <input type="hidden" name="nome" value="$nome"/>
-                                                            <input type="hidden" name="cognome" value="$cognome"/>
-                                                            <input type="hidden" name="nomeArte" value="$nomeArte"/>
-                                                            <input type="hidden" name="biografia" value="$biografia"/>
-                                                            <input type="hidden" name="casaDiscograficaId" value="$casadiscograficaId"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$casaDiscograficaId"/>
                                                             <button class="btn btn-primary btn-sm" name="modificaArtista">Modifica</button>
                                                         </form>
                                                         <form action="." method="post">
@@ -618,6 +724,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Artista</th>
+                                        <th>Durata</th>
                                         <th>Pubblicata il</th>
                                         <th>Azioni</th>
                                     </tr>
@@ -642,15 +749,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $datiArtista = $queryArtista->get_result();
                                             $artista = mysqli_fetch_assoc($datiArtista);
 
+
+                                            $casaDiscograficaId = $riga["casaDiscograficaId"];
+
                                             echo <<<HTML
                                                 <tr class="hover">
                                                     <td>$id</td>
                                                     <td>{$canzone["nome"]}</td>
                                                     <td>{$artista["nome"]} {$artista["cognome"]}</td>
+                                                    <td>{$canzone["durataMinuti"]}</td>
                                                     <td>{$canzone["dataPubblicazione"]}</td>
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
+                                                            <input type="hidden" name="artistaId" value="$idArtista"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$casaDiscograficaId"/>
+
                                                             <button class="btn btn-primary btn-sm" name="modificaCanzone">Modifica</button>
                                                         </form>
                                                         <form action="." method="post">
@@ -674,15 +788,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="text-sm breadcrumbs">
                     <ul>
                         <li><a href=".">Case discografiche</a></li>
-                        <li><a href="#"><?php echo $nomeCasaDiscografica; ?></a></li>
+                        <li><a href="#"><?php echo $casaDiscografica["nome"]; ?></a></li>
                         <li><a href=".">Artisti</a></li>
-                        <li><?php echo "<b>" . $nome . " " . $cognome . "</b>"; ?></li>
+                        <li><?php echo "<b>" . $artista["nome"] . " " . $artista["cognome"] . "</b>"; ?></li>
                     </ul>
                 </div>
                 <div class="card shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
                     <div class="card-body">
                         <div class="flex flex-row justify-between items-center">
-                            <h2 class="card-title">Gestione canzoni</h2>
+                            <h2 class="card-title">Gestione canzoni artista</h2>
                             <button class="btn btn-primary" onclick="aggiungiCanzoneModal.showModal()">Inserisci</button>
                         </div>
 
@@ -694,6 +808,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Artista</th>
+                                        <th>Durata</th>
                                         <th>Pubblicata il</th>
                                         <th>Azioni</th>
                                     </tr>
@@ -712,10 +827,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td>$id</td>
                                                     <td>{$nomeCanzone}</td>
                                                     <td>{$nome} {$cognome}</td>
+                                                    <td>{$durata}</td>
                                                     <td>{$dataPubblicazione}</td>
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
+                                                            <input type="hidden" name="nome" value="$nomeCanzone"/>
+                                                            <input type="hidden" name="durata" value="$durata"/>
+
                                                             <button class="btn btn-primary btn-sm" name="modificaCanzone">Modifica</button>
                                                         </form>
                                                         <form action="." method="post">
