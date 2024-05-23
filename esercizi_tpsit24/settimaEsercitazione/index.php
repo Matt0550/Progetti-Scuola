@@ -25,7 +25,6 @@ if ($conn == false)
     exit("Errore: " . mysqli_connect_error());
 
 
-
 $queryCaseDiscografiche = "SELECT * FROM caseDiscografiche";
 $datiCaseDiscografiche = mysqli_query($conn, $queryCaseDiscografiche);
 if (!$datiCaseDiscografiche)
@@ -131,14 +130,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryArtista->bind_param("i", $casadiscograficaId);
         $queryArtista->execute();
         $datiArtisti = $queryArtista->get_result();
-        
+
 
         // Artisti_canzoni è una tabella di relazione tra artisti e canzoni poichè un artista può avere più canzoni e una canzone può avere più artisti using datiArtisti
         $queryArtistiCanzoni = $conn->prepare("SELECT * FROM artisti_canzoni WHERE idArtista IN (SELECT id FROM artisti WHERE casaDiscograficaId = ?)");
         $queryArtistiCanzoni->bind_param("i", $casadiscograficaId);
         $queryArtistiCanzoni->execute();
         $datiArtistiCanzoni = $queryArtistiCanzoni->get_result();
-        
+
 
     } else if (isset($_POST["eliminaArtista"])) {
         $id = $_POST["id"];
@@ -247,6 +246,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else if (isset($_POST["apriArtista"])) {
         $artistaId = $_POST["id"];
+        $casaDiscograficaId = $_POST["casaDiscograficaId"];
+        $nomeCasaDiscografica = $_POST["casaDiscograficaNome"];
+        $nome = $_POST["nome"];
+        $cognome = $_POST["cognome"];
+        $nomeArte = $_POST["nomeArte"];
+        $biografia = $_POST["biografia"];
 
         if (empty($artistaId)) {
             exit("ERRORE: apriArtista: Dati mancanti!");
@@ -255,7 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryCanzoni = $conn->prepare("SELECT * FROM canzoni WHERE id IN (SELECT idCanzone FROM artisti_canzoni WHERE idArtista = ?)");
         $queryCanzoni->bind_param("i", $artistaId);
         $queryCanzoni->execute();
-        $datiCanzoni = $queryCanzoni->get_result();
+        $datiCanzoniPerArtista = $queryCanzoni->get_result();
 
     } else if (isset($_POST["eliminaCanzone"])) {
         $id = $_POST["id"];
@@ -271,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryDeleteCanzone = $conn->prepare("DELETE FROM canzoni WHERE id = ?");
         $queryDeleteCanzone->bind_param("i", $id);
         $queryDeleteCanzone->execute();
-        
+
 
         header("Location: .");
 
@@ -296,10 +301,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryInsertArtistaCanzone->execute();
 
         header("Location: .");
-
-    } 
-    
-    else {
+    } else {
         exit("Azione non valida!");
 
     }
@@ -357,7 +359,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </dialog>
 
-    <?php if (isset($datiArtisti)): ?>
+    <?php if (isset($datiArtisti) || isset($datiArtistiCanzoni)): ?>
         <dialog id="aggiungiArtistaModal" class="modal">
             <div class="modal-box">
                 <h3 class="font-bold text-lg">Aggiungi artista</h3>
@@ -447,7 +449,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h1 class="text-5xl font-bold my-4">Settima esercitazione</h1>
                 <p class="text-lg">Gestione di canzoni, artisti e case discografiche</p>
             </div>
-            <?php if (!isset($datiArtisti) && !isset($datiArtistiCanzoni)): ?>
+            <?php if (!isset($datiArtisti) && !isset($datiArtistiCanzoni) && !isset($datiCanzoniPerArtista)): ?>
                 <div class="card shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
                     <div class="card-body">
                         <div class="flex flex-row justify-between items-center">
@@ -517,7 +519,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="text-sm breadcrumbs">
                     <ul>
                         <li><a href=".">Case discografiche</a></li>
-                        <li><a href="#"><?php echo "<b>" . $nomeCasaDiscografica . "</b>"; ?></a></li>
+                        <li><?php echo "<b>" . $nomeCasaDiscografica . "</b>"; ?></li>
                     </ul>
                 </div>
                 <div class="card shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
@@ -565,6 +567,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
+                                                            <input type="hidden" name="casaDiscograficaId" value="$casadiscograficaId"/>
+                                                            <input type="hidden" name="casaDiscograficaNome" value="$nomeCasaDiscografica"/>
+                                                            <input type="hidden" name="nome" value="$nome"/>
+                                                            <input type="hidden" name="cognome" value="$cognome"/>
+                                                            <input type="hidden" name="nomeArte" value="$nomeArte"/>
+                                                            <input type="hidden" name="biografia" value="$biografia"/>
                                                             <button class="btn btn-accent btn-sm" name="apriArtista">Apri</button>
                                                         </form>
                                                         <form action="." method="post">
@@ -610,6 +618,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Artista</th>
+                                        <th>Pubblicata il</th>
                                         <th>Azioni</th>
                                     </tr>
                                 </thead>
@@ -638,6 +647,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td>$id</td>
                                                     <td>{$canzone["nome"]}</td>
                                                     <td>{$artista["nome"]} {$artista["cognome"]}</td>
+                                                    <td>{$canzone["dataPubblicazione"]}</td>
                                                     <td class="flex flex-row gap-x-2">
                                                         <form action="." method="post">
                                                             <input type="hidden" name="id" value="$id"/>
@@ -660,7 +670,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
+            <?php elseif (isset($datiCanzoniPerArtista)): ?>
+                <div class="text-sm breadcrumbs">
+                    <ul>
+                        <li><a href=".">Case discografiche</a></li>
+                        <li><a href="#"><?php echo $nomeCasaDiscografica; ?></a></li>
+                        <li><a href=".">Artisti</a></li>
+                        <li><?php echo "<b>" . $nome . " " . $cognome . "</b>"; ?></li>
+                    </ul>
+                </div>
+                <div class="card shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
+                    <div class="card-body">
+                        <div class="flex flex-row justify-between items-center">
+                            <h2 class="card-title">Gestione canzoni</h2>
+                            <button class="btn btn-primary" onclick="aggiungiCanzoneModal.showModal()">Inserisci</button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="table">
+                                <!-- head -->
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Artista</th>
+                                        <th>Pubblicata il</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (isset($datiCanzoniPerArtista) && $datiCanzoniPerArtista->num_rows > 0) {
+                                        while ($riga = $datiCanzoniPerArtista->fetch_assoc()) {
+                                            $id = $riga["id"];
+                                            $nomeCanzone = $riga["nome"];
+                                            $durata = $riga["durataMinuti"];
+                                            $dataPubblicazione = $riga["dataPubblicazione"];
+
+                                            echo <<<HTML
+                                                <tr class="hover">
+                                                    <td>$id</td>
+                                                    <td>{$nomeCanzone}</td>
+                                                    <td>{$nome} {$cognome}</td>
+                                                    <td>{$dataPubblicazione}</td>
+                                                    <td class="flex flex-row gap-x-2">
+                                                        <form action="." method="post">
+                                                            <input type="hidden" name="id" value="$id"/>
+                                                            <button class="btn btn-primary btn-sm" name="modificaCanzone">Modifica</button>
+                                                        </form>
+                                                        <form action="." method="post">
+                                                            <input type="hidden" name="id" value="$id"/>
+                                                            <button class="btn btn-error btn-sm" name="eliminaCanzone
+                                                            ">Elimina</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                HTML;
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='4'>Nessun dato presente</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             <?php endif; ?>
+
 
             <a class="font-bold" href="https://bio.matteosillitti.it" target="_blank">Matteo Sillitti 5C INF</a>
 
