@@ -131,12 +131,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryArtista->bind_param("i", $casadiscograficaId);
         $queryArtista->execute();
         $datiArtisti = $queryArtista->get_result();
+        
 
-        // Artisti_canzoni è una tabella di relazione tra artisti e canzoni poichè un artista può avere più canzoni e una canzone può avere più artisti
+        // Artisti_canzoni è una tabella di relazione tra artisti e canzoni poichè un artista può avere più canzoni e una canzone può avere più artisti using datiArtisti
         $queryArtistiCanzoni = $conn->prepare("SELECT * FROM artisti_canzoni WHERE idArtista IN (SELECT id FROM artisti WHERE casaDiscograficaId = ?)");
         $queryArtistiCanzoni->bind_param("i", $casadiscograficaId);
         $queryArtistiCanzoni->execute();
         $datiArtistiCanzoni = $queryArtistiCanzoni->get_result();
+        
 
     } else if (isset($_POST["eliminaArtista"])) {
         $id = $_POST["id"];
@@ -451,12 +453,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="flex flex-row justify-between items-center">
                             <h2 class="card-title">Gestione case discografiche</h2>
                             <button class="btn btn-primary" onclick="aggiungiCasaModal.showModal()">Inserisci</button>
-
-
                         </div>
 
                         <div class="overflow-x-auto">
-
                             <table class="table">
                                 <!-- head -->
                                 <thead>
@@ -544,9 +543,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $datiArtisti->data_seek(0);
                                     if (isset($datiArtisti) && $datiArtisti->num_rows > 0) {
                                         while ($riga = $datiArtisti->fetch_assoc()) {
-                                            var_dump($riga);
                                             $id = $riga["id"];
                                             $nome = $riga["nome"];
                                             $cognome = $riga["cognome"];
